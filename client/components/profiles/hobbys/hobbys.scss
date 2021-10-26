@@ -1,0 +1,17 @@
+.hobbys {
+  display: flex;
+  flex-flow: column wrap;
+  &__title {
+    font-weight: 100;
+  }
+  &__container {
+    display: flex;
+    flex-flow: column wrap;
+    // column-gap: 20px;
+    row-gap: 20px;
+    background-color: red;
+    &__item {
+      background-color: rosybrown;
+    }
+  }
+}
