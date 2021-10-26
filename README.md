@@ -1,2 +1,0 @@
-# MeetBe
-Web app
