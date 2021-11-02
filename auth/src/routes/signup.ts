@@ -1,21 +1,21 @@
-import express, { Request, Response, NextFunction } from 'express';
-import { body, validationResult } from 'express-validator';
-import jwt from 'jsonwebtoken';
-import { validateRequest, BadRequestError } from '@meetbe/common';
-import { User } from '../models/userModel';
-import { UserCreatedPublisher } from '../events/publishers/user-created-publisher';
-import { natsWrapper } from '../natsWrapper';
+import express, { Request, Response, NextFunction } from "express";
+import { body, validationResult } from "express-validator";
+import jwt from "jsonwebtoken";
+import { validateRequest, BadRequestError } from "@conviera/common";
+import { User } from "../models/userModel";
+import { UserCreatedPublisher } from "../events/publishers/user-created-publisher";
+import { natsWrapper } from "../natsWrapper";
 
 const router = express.Router();
 
 router.post(
-  '/api/users/signup',
+  "/api/users/signup",
   [
-    body('email').isEmail().withMessage('email must be valid'),
-    body('password')
+    body("email").isEmail().withMessage("email must be valid"),
+    body("password")
       .trim()
       .isLength({ min: 4, max: 20 })
-      .withMessage('Password must be between 4 and 20 characters'),
+      .withMessage("Password must be between 4 and 20 characters"),
     (req: Request, res: Response, next: NextFunction) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -32,7 +32,7 @@ router.post(
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      throw new BadRequestError('Email in use');
+      throw new BadRequestError("Email in use");
     }
 
     const user = User.build({ email, firstname, lastname, password });

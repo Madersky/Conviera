@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import UseRequest from '../../hooks/use-request';
-import { EditExperience } from '../profiles/experience/EditExperience';
+import { useState } from "react";
+import UseRequest from "../../hooks/use-request";
+import { EditExperience } from "../profiles/experience/EditExperience";
 
 const Accordion = ({
   experience,
@@ -10,14 +10,15 @@ const Accordion = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [accordionTitle, setAccordionTitle] = useState(experience.title);
+
   const [accordionDescription, setAccordionDescription] = useState(
     experience.description
   );
   const [deleteAccordionRequest, deleteAccordionErrors] = UseRequest({
     url: `/api/profiles/id/${currentUser._id}`,
-    method: 'put',
+    method: "put",
     body: {
-      tab: 'experiences',
+      tab: "experiences",
       value: {
         title: accordionTitle,
       },
@@ -38,7 +39,7 @@ const Accordion = ({
             <i className="bx bx-log-out" />
           </button>
         </div>
-        <div className={` ${isOpen ? '' : 'collapse'}`}>
+        <div className={` ${isOpen ? "" : "collapse"}`}>
           <div className="  ">
             <div className=" ">{accordionDescription}</div>
 

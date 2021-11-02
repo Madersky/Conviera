@@ -1,4 +1,4 @@
-import { Subjects, UserUpdatedEvent, Publisher } from '@meetbe/common';
+import { Subjects, UserUpdatedEvent, Publisher } from "@conviera/common";
 
 export class UserUpdatedPublisher extends Publisher<UserUpdatedEvent> {
   readonly subject = Subjects.UserUpdated;

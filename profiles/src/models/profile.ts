@@ -1,33 +1,32 @@
-import mongoose from 'mongoose';
-import { UserDoc } from './user';
-import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
+import mongoose from "mongoose";
+import { UserDoc, User } from "./user";
+import { ContactDoc } from "./contact";
+
+import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 
 interface ProfileAttrs {
   _id: string;
   user: UserDoc;
-  // age: any;
-  // birthdate: any;
-  // aboutMe: any;
+  age: number;
+  birthdate: any;
+  aboutMe: string;
   profilePhoto: string;
   createdAt: Date;
-  // hobbys: any[];
-  // hometown: any;
-  // school: any;
-  // profession: any;
-  // skills: { title: string; description: string; time: Date }[];
-  // experiences: { title: string; description: string; time: Date }[];
-  // groups: [string];
-  // contacts: [string];
-  // photos: [string];
-  // events: [string];
-  // posts: [string];
-  // comments: [string];
-  // currentJob: any;
-  // phoneNumber: any;
+  school: string;
+  profession: string;
+  academicTitle: string;
+  publications: { title: string; description: string; time: Date }[];
+  conferences: [];
+  contacts: [ContactDoc];
+  events: [string];
+  notifications: [];
+  posts: [string];
+  comments: [string];
+  phoneNumber: any;
 }
 
 interface ProfileModel extends mongoose.Model<ProfileDoc> {
-  build(attrs: ProfileAttrs): ProfileDoc;
+  build(attrs: any): ProfileDoc;
 }
 
 interface ProfileDoc extends mongoose.Document {
@@ -35,21 +34,19 @@ interface ProfileDoc extends mongoose.Document {
   age: string;
   birthdate: string;
   aboutMe: string;
-  profilePhoto?: any;
+  profilePhoto: string;
   createdAt: string;
-  hobbys: [string];
-  hometown: string;
   school: string;
   profession: string;
-  experiences: { title: string; description: string; time: Date }[];
-  skills: { title: string; description: string; time: Date }[];
-  groups: [string];
-  contacts: [string];
-  photos: [string];
+  academicTitle: string;
+  publications: { title: string; description: string; time: string }[];
+  conferences: [];
+  contacts: [ContactDoc];
   events: [string];
+  notifications: [];
   posts: [string];
   comments: [string];
-  currentJob: string;
+
   phoneNumber: string;
   version: number;
 }
@@ -58,13 +55,17 @@ const profileSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
     },
     aboutMe: {
       type: String,
       required: false,
     },
     profilePhoto: {
+      type: String,
+      required: false,
+    },
+    academicTitle: {
       type: String,
       required: false,
     },
@@ -76,58 +77,45 @@ const profileSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-    hometown: {
-      type: String,
-      required: false,
-    },
     school: {
       type: String,
       required: false,
     },
-    hobbys: {
-      type: Array,
-      required: false,
-    },
-    experiences: {
+    publications: {
       type: [mongoose.Schema.Types.Mixed],
-      required: false,
-    },
-    skills: {
-      type: [mongoose.Schema.Types.Mixed],
-      required: false,
-    },
-    groups: {
-      type: Array,
       required: false,
     },
     contacts: {
-      type: Array,
+      type: [mongoose.Schema.Types.Mixed],
+      ref: "Contact",
       required: false,
     },
-    photos: {
-      type: Array,
+    conferences: {
+      type: [mongoose.Schema.Types.Mixed],
+      ref: "Conference",
       required: false,
     },
     events: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: 'Events',
+      type: [mongoose.Schema.Types.Mixed],
+      ref: "Event",
+      required: false,
+    },
+    notifications: {
+      type: [mongoose.Schema.Types.Mixed],
+      ref: "Notification",
       required: false,
     },
     posts: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: 'Posts',
+      type: [mongoose.Schema.Types.Mixed],
+      ref: "Post",
       required: false,
     },
     comments: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: 'Comments',
+      type: [mongoose.Schema.Types.Mixed],
+      ref: "Comment",
       required: false,
     },
     profession: {
-      type: String,
-      required: false,
-    },
-    currentJob: {
       type: String,
       required: false,
     },
@@ -152,7 +140,7 @@ const profileSchema = new mongoose.Schema(
   }
 );
 
-profileSchema.set('versionKey', 'version');
+profileSchema.set("versionKey", "version");
 profileSchema.plugin(updateIfCurrentPlugin);
 profileSchema.statics.build = (attrs: ProfileAttrs) => {
   return new Profile({
@@ -162,9 +150,7 @@ profileSchema.statics.build = (attrs: ProfileAttrs) => {
     // birthdate: attrs.birthdate,
     // aboutMe: attrs.aboutMe,
     profilePhoto: attrs.profilePhoto,
-    // createdAt: new Date(Date.now()).toString(),
-    // hobbys: attrs.hobbys,
-    // hometown: attrs.hometown,
+    createdAt: new Date(Date.now()).toString(),
     // school: attrs.school,
     // profession: attrs.profession,
     // experiences: attrs.experiences,
@@ -174,7 +160,7 @@ profileSchema.statics.build = (attrs: ProfileAttrs) => {
 };
 
 const Profile = mongoose.model<ProfileDoc, ProfileModel>(
-  'Profile',
+  "Profile",
   profileSchema
 );
 

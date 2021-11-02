@@ -1,21 +1,23 @@
-import { useState, useEffect, useRef } from 'react';
-import UseRequest from '../../../hooks/use-request';
+import { useState, useEffect, useRef } from "react";
+import UseRequest from "../../../hooks/use-request";
 
 const ImagePanel = ({ profile, currentUser }) => {
   const [profilePhoto, setProfilePhoto] = useState();
-  const [profilePhotoName, setProfilePhotoName] = useState('Choose file');
+  const [profilePhotoName, setProfilePhotoName] = useState("Choose file");
   const [photoUrl, setPhotoUrl] = useState(profile.profilePhoto);
   const isInitialMount = useRef(true);
 
+  const [isOpen, setIsOpen] = useState(false);
+
   const [patchProfilePhotoRequest, patchProfilePhotoErrors] = UseRequest({
     url: `/api/profiles/${currentUser._id}/photo`,
-    method: 'patch',
+    method: "patch",
     body: {
       photoUrl: photoUrl,
     },
     onSuccess: () => {
-      setProfilePhotoName('Choose file');
-      console.log('Profile Photo updated');
+      setProfilePhotoName("Choose file");
+      console.log("Profile Photo updated");
     },
   });
 
@@ -29,12 +31,12 @@ const ImagePanel = ({ profile, currentUser }) => {
 
   const uploadProfilePhoto = async () => {
     const photo = profilePhoto;
-    const { randomBytes } = await import('crypto');
+    const { randomBytes } = await import("crypto");
 
-    var name = randomBytes(32).toString('hex');
+    var name = randomBytes(32).toString("hex");
 
-    const response = await fetch('/api/s3', {
-      method: 'post',
+    const response = await fetch("/api/s3", {
+      method: "post",
       body: JSON.stringify({
         type: photo.type,
         name: name,
@@ -44,10 +46,10 @@ const ImagePanel = ({ profile, currentUser }) => {
     const { url } = await response.json();
 
     await fetch(url, {
-      method: 'PUT',
+      method: "PUT",
       body: photo,
       headers: {
-        'Content-Type': photo.type,
+        "Content-Type": photo.type,
       },
     });
 
@@ -59,6 +61,7 @@ const ImagePanel = ({ profile, currentUser }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     uploadProfilePhoto();
+    setIsOpen(!isOpen);
   };
 
   const onChange = (e) => {
@@ -68,43 +71,52 @@ const ImagePanel = ({ profile, currentUser }) => {
     }
   };
 
+  const onClick = (e) => {
+    setIsOpen(!isOpen);
+  };
   return (
     <div className="image-container">
       <div className="image">
         <img
           src={photoUrl}
+          onClick={onClick}
           style={{
-            position: 'relative',
-            minWidth: '200px',
-            maxWidth: '200px',
-            minHeight: '200px',
-            maxHeight: '200px',
+            position: "relative",
+            minWidth: "200px",
+            maxWidth: "200px",
+            minHeight: "200px",
+            maxHeight: "200px",
+            cursor: "pointer",
           }}
         ></img>
-      </div>
-      <form onSubmit={onSubmit} className="image-form">
-        <div className="image-form__container">
-          <label>
-            {profilePhotoName}
-            <input
-              className="image-form__submit"
-              type="file"
-              name="photo"
-              onChange={onChange}
-            />
-          </label>
-        </div>
-        <button
-          type="submit"
-          style={
-            profilePhotoName !== 'Choose file'
-              ? { display: 'flex' }
-              : { display: 'none' }
-          }
+        <form
+          onSubmit={onSubmit}
+          className="image__form"
+          style={isOpen === true ? { display: "flex" } : { display: "none" }}
         >
-          Submit
-        </button>
-      </form>
+          <div className="image__form-container">
+            <label>
+              {profilePhotoName}
+              <input
+                className="image__form-submit"
+                type="file"
+                name="photo"
+                onChange={onChange}
+              />
+            </label>
+          </div>
+          <button
+            type="submit"
+            style={
+              profilePhotoName !== "Choose file"
+                ? { display: "flex" }
+                : { display: "none" }
+            }
+          >
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

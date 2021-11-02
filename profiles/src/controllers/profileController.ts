@@ -1,12 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
-// const fileUpload = require('express-fileupload');
+import { Request, Response, NextFunction } from "express";
 
-import { natsWrapper } from '../nats-wrapper';
-import { ProfileUpdatePublisher } from '../events/publishers/profile-update-publisher';
-import { Profile } from '../models/profile';
-import { User } from '../models/user';
-import { BadRequestError } from '@meetbe/common';
-
+import { Profile } from "../models/profile";
+import { User } from "../models/user";
+import { BadRequestError } from "@conviera/common";
 // exports.createProfile = async (req: Request, res: Response) => {
 //   console.log('CREATING PROFILE');
 //   const {
@@ -73,7 +69,7 @@ exports.getAllProfiles = async (
 ) => {
   try {
     const allUsers = await User.find();
-    const allProfiles = await Profile.find().populate('user');
+    const allProfiles = await Profile.find().populate("user");
     // const allUsers = await User.find();
     res
       .status(200)
@@ -85,7 +81,7 @@ exports.getAllProfiles = async (
 
 exports.getProfileByUserId = async (req: Request, res: Response) => {
   try {
-    const profile = await Profile.findById(req.params._id).populate('user');
+    const profile = await Profile.findById(req.params._id).populate("user");
     res.status(200).send({ profile: profile });
   } catch (err) {
     res.status(404).send(`ERRROR! ${err}`);
@@ -94,7 +90,7 @@ exports.getProfileByUserId = async (req: Request, res: Response) => {
 
 exports.getProfileByEmail = async (req: Request, res: Response) => {
   try {
-    const profile = await Profile.where('email').equals(req.params.email);
+    const profile = await Profile.where("email").equals(req.params.email);
     res.status(200).send({ profile: profile || null });
   } catch (err) {
     res.status(404).send(`ERROR! ${err}`);
@@ -116,7 +112,7 @@ exports.createExperience = async (req: Request, res: Response) => {
       }
     );
     if (!profile) {
-      throw new Error('Profile not found!');
+      throw new Error("Profile not found!");
     }
     await profile.save();
     res.status(200).send({ profile: profile || null });
@@ -135,18 +131,18 @@ exports.patchExperience = async (req: Request, res: Response) => {
       req.params._id,
       {
         $set: {
-          'experiences.$[elem].description': experience.description,
-          'experiences.$[elem].title': experience.title,
+          "experiences.$[elem].description": experience.description,
+          "experiences.$[elem].title": experience.title,
         },
       },
       {
         new: true,
         multi: true,
-        arrayFilters: [{ 'elem.title': { $eq: req.body.oldTitle } }],
+        arrayFilters: [{ "elem.title": { $eq: req.body.oldTitle } }],
       }
     );
     if (!profile) {
-      throw new Error('Profile not found');
+      throw new Error("Profile not found");
     }
     await profile.save();
     res.status(200).send({ profile: profile || null });
@@ -164,7 +160,7 @@ exports.patchProfilePhoto = async (req: Request, res: Response) => {
     });
 
     if (!profile) {
-      throw new Error('Profile not found');
+      throw new Error("Profile not found");
     }
 
     await profile.save();
@@ -176,54 +172,13 @@ exports.patchProfilePhoto = async (req: Request, res: Response) => {
 
 exports.patchProfile = async (req: Request, res: Response) => {
   try {
-    const newObj: Record<string, any> = {};
-    Object.keys(req.body).forEach((fieldName) => {
-      if (req.body[fieldName] !== null) {
-        newObj[fieldName] = req.body[fieldName];
-      }
-    });
-    if (newObj.hobby !== null || newObj.experience !== null) {
-      const hobby: [string] = newObj.hobby;
-      delete newObj.hobby;
-      const profile = await Profile.findByIdAndUpdate(
-        req.params._id,
-        {
-          ...newObj,
-          $addToSet: {
-            hobbys: hobby,
-          },
-        },
-        { new: true }
-      );
-      if (!profile) {
-        throw new Error('Profile not found');
-      }
-      await profile.save();
-      res.status(200).send({ profile: profile || null });
-    } else {
-      const profile = await Profile.findByIdAndUpdate(
-        req.params._id,
-        newObj,
-        // {
-        //   $push: { hobbys: req.body.hobbys},
-        //   age: req.body.age,
-        //   school: req.body.school,
-        //   birthdate: req.body.birthdate,
-        //   aboutMe: req.body.aboutMe,
-        //   hometown: req.body.hometown,
-        //   profession: req.body.profession,
-        //   currentJob: req.body.currentJob,
-        //   phoneNumber: req.body.phoneNumber,
-        // },
-        { new: true }
-      );
+    const profile = await Profile.findByIdAndUpdate(req.params._id, req.body);
 
-      if (!profile) {
-        throw new Error('Profile not found');
-      }
-      await profile.save();
-      res.status(200).send({ profile: profile || null });
+    if (!profile) {
+      throw new Error("Profile not found");
     }
+    await profile.save();
+    res.status(200).send({ profile: profile || null });
   } catch (err) {
     res.status(404).send(`ERROR! ${err}`);
   }
@@ -239,7 +194,7 @@ exports.deleteValueFromArrayProfile = async (req: Request, res: Response) => {
       $pull: { [tab]: value },
     });
     if (!profile) {
-      throw new Error('Profile not found');
+      throw new Error("Profile not found");
     }
 
     console.log(

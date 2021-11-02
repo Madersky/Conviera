@@ -18,15 +18,15 @@
   }
 
   @media (max-width: 1200px) {
-    width: 850px;
+    width: 900px;
   }
 
   @media (max-width: 992px) {
-    width: 650px;
+    width: 800px;
   }
 
   @media (max-width: 768px) {
-    width: 550px;
+    width: 700px;
   }
 
   @media (max-width: 576px) {
@@ -47,45 +47,52 @@
   &__container {
     &--left-side {
       display: flex;
-      flex: 1 45%;
+      flex: 1 65%;
       margin-top: 35px;
-      flex-flow: column wrap;
+      flex-direction: column;
+      flex-wrap: wrap;
+      // flex-flow: column wrap;
       column-gap: 25px;
       row-gap: 25px;
+      padding: 10px;
+
+      border: 2px solid indigo;
+
+      @media (max-width: 768px) {
+        flex: 1 100%;
+      }
     }
     &--right-side {
+      height: 90vh;
       display: flex;
-      flex: 1 45%;
+      flex: 1 25%;
       flex-flow: column wrap;
       margin-top: 35px;
       column-gap: 25px;
       row-gap: 25px;
+      border: 2px solid indigo;
     }
   }
 
   &__basic-info {
-    // min-width: 400px;
+    // height: 200px;
+    // width: fit-content;
     display: flex;
-
     flex: 1 45%;
-    border: 2px solid indigo;
+    // border: 2px solid indigo;
     border-radius: 5px;
     row-gap: 25px;
     column-gap: 25px;
-    // justify-content: center;
   }
   &__experience {
-    // min-width: 400px;
     display: flex;
     flex: 1 45%;
     justify-content: center;
     border: 2px solid indigo;
     border-radius: 5px;
-    // align-items: center;
   }
 
   &__hobbys {
-    // min-width: 400px;
     display: flex;
     flex: 1 45%;
     justify-content: center;
@@ -94,7 +101,6 @@
   }
 
   &__edit-profile {
-    // min-width: 400px;
     display: flex;
     flex: 1 45%;
     justify-content: center;

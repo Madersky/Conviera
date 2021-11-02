@@ -1,21 +1,21 @@
-import express, { Request, Response } from 'express';
-import { currentUser } from '@meetbe/common';
-import jwt from 'jsonwebtoken';
+import express, { Request, Response } from "express";
+import { currentUser } from "@conviera/common";
+import jwt from "jsonwebtoken";
 
-import { User } from '../models/userModel';
-import { UserUpdatedPublisher } from '../events/publishers/user-updated-publisher';
-import { natsWrapper } from '../natsWrapper';
+import { User } from "../models/userModel";
+import { UserUpdatedPublisher } from "../events/publishers/user-updated-publisher";
+import { natsWrapper } from "../natsWrapper";
 
 const router = express.Router();
 
 router.patch(
-  '/api/users/updateuser/:_id',
+  "/api/users/updateuser/:_id",
   currentUser,
   async (req: Request, res: Response) => {
     const user = await User.findById(req.params._id);
 
     if (!user) {
-      throw new Error('User not found');
+      throw new Error("User not found");
     }
     user.set(req.body);
     await user.save();

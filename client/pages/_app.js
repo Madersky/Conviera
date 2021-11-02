@@ -1,20 +1,11 @@
-import buildClient from '../api/buildClient';
-import Navbar from '../components/navbar/Navbar';
+import buildClient from "../api/buildClient";
+import Navbar from "../components/navbar/Navbar";
 
-import '../styles/main.scss';
-// const RenderNav = (currentUser) => {
-//   if (currentUser.id) {
-//     console.log(`jestem true`, currentUser);
-//     return <Navbar userId={currentUser.id} />;
-//   } else {
-//     console.log(`jestem false`, currentUser);
-//     return null;
-//   }
-// };
+import "../styles/main.scss";
 
 const AppComponent = ({ Component, pageProps, currentUser }) => {
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: "flex", justifyContent: "center" }}>
       <meta
         name="viewport"
         content="width=device-width, initial-scale=1, user-scalable=no"
@@ -36,7 +27,7 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
 
 AppComponent.getInitialProps = async (appContext) => {
   const client = buildClient(appContext.ctx);
-  const { data } = await client.get('/api/users/currentuser');
+  const { data } = await client.get("/api/users/currentuser");
 
   let pageProps = {};
   if (appContext.Component.getInitialProps) {

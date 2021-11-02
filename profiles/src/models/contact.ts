@@ -1,24 +1,24 @@
 import mongoose from "mongoose";
 import { updateIfCurrentPlugin } from "mongoose-update-if-current";
-interface UserAttrs {
+interface ContactAttrs {
   _id: string;
   email: string;
   firstname: string;
   lastname: string;
 }
 
-export interface UserDoc extends mongoose.Document {
+export interface ContactDoc extends mongoose.Document {
   email: string;
   firstname: string;
   lastname: string;
   version: number;
 }
 
-interface UserModel extends mongoose.Model<UserDoc> {
-  build(attrs: UserAttrs): UserDoc;
+interface ContactModel extends mongoose.Model<ContactDoc> {
+  build(attrs: ContactAttrs): ContactDoc;
 }
 
-const userSchema = new mongoose.Schema(
+const contactSchema = new mongoose.Schema(
   {
     email: {
       type: String,
@@ -42,11 +42,11 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-userSchema.set("versionKey", "version");
-userSchema.plugin(updateIfCurrentPlugin);
+contactSchema.set("versionKey", "version");
+contactSchema.plugin(updateIfCurrentPlugin);
 
-userSchema.statics.build = (attrs: UserAttrs) => {
-  return new User({
+contactSchema.statics.build = (attrs: ContactAttrs) => {
+  return new Contact({
     _id: attrs._id,
     email: attrs.email,
     firstname: attrs.firstname,
@@ -54,6 +54,9 @@ userSchema.statics.build = (attrs: UserAttrs) => {
   });
 };
 
-const User = mongoose.model<UserDoc, UserModel>("User", userSchema);
+const Contact = mongoose.model<ContactDoc, ContactModel>(
+  "Contact",
+  contactSchema
+);
 
-export { User };
+export { Contact };

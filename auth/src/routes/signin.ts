@@ -1,21 +1,21 @@
-import express, { Request, Response, NextFunction } from 'express';
-import { body, validationResult } from 'express-validator';
-import jwt from 'jsonwebtoken';
-import { validateRequest, BadRequestError } from '@meetbe/common';
+import express, { Request, Response, NextFunction } from "express";
+import { body, validationResult } from "express-validator";
+import jwt from "jsonwebtoken";
+import { validateRequest, BadRequestError } from "@conviera/common";
 
-import { Password } from '../services/password';
-import { User } from '../models/userModel';
+import { Password } from "../services/password";
+import { User } from "../models/userModel";
 
 const router = express.Router();
 
 router.post(
-  '/api/users/signin',
+  "/api/users/signin",
   [
-    body('email').isEmail().withMessage('Email must be valid'),
-    body('password')
+    body("email").isEmail().withMessage("Email must be valid"),
+    body("password")
       .trim()
       .notEmpty()
-      .withMessage('You must supply a password'),
+      .withMessage("You must supply a password"),
     (req: Request, res: Response, next: NextFunction) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -32,7 +32,7 @@ router.post(
     const existingUser = await User.findOne({ email });
 
     if (!existingUser) {
-      throw new BadRequestError('Invalid credentials');
+      throw new BadRequestError("Invalid credentials");
     }
 
     const passwordsMatch = await Password.compare(
@@ -40,7 +40,7 @@ router.post(
       password
     );
     if (!passwordsMatch) {
-      throw new BadRequestError('Invalid credentials');
+      throw new BadRequestError("Invalid credentials");
     }
 
     // Generate JWT
