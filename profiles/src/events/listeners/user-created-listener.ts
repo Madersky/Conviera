@@ -4,7 +4,10 @@ import { User, UserDoc } from "../../models/user";
 
 import { Profile } from "../../models/profile";
 
+//
 //populate
+//
+
 const randomValue = (array: any) => {
   let random = Math.floor(Math.random() * array.length);
   return array[random];
@@ -103,9 +106,11 @@ const publicationsArray = [
     doi: "https://doi.org/10.3844/ajbbsp.2008.250.254",
   },
 ];
+
 //
 //end of populate
 //
+
 export class UserCreatedListener extends Listener<UserCreatedEvent> {
   readonly subject = Subjects.UserCreated;
   queueGroupName = "profiles-service";
@@ -142,8 +147,7 @@ export class UserCreatedListener extends Listener<UserCreatedEvent> {
       phoneNumber: "123456789",
     });
     await profile.save();
-    // console.log(user);
-    console.log(profile);
+
     msg.ack();
   }
 }
