@@ -1,17 +1,28 @@
 .details {
-  //   &__content {
-  //   }
-
   &__info {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
-    border-top: 4px solid indigo;
+    border-top: 2px solid indigo;
 
-    p {
-      width: 48%;
-      padding: 10px 0 0 0;
-      margin: 0;
+    &-section {
+      border-bottom: 2px solid indigo;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+
+      &-paragraph {
+        width: 48%;
+        padding: 10px 0 0 0;
+        margin: 0;
+
+        &--email {
+          width: 48%;
+          padding: 10px 0 0 0;
+          margin: 0;
+          word-break: break-all;
+        }
+      }
     }
   }
 }

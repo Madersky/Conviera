@@ -1,0 +1,56 @@
+.publications {
+  &__section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__header {
+    margin: 0;
+    width: fit-content;
+    border-bottom: 2px solid indigo;
+  }
+
+  &__edit {
+    display: flex;
+    width: 15%;
+    justify-content: space-between;
+
+    &-button {
+      height: fit-content;
+      padding: 10px 15px 10px 15px;
+
+      font-size: 16px;
+
+      cursor: pointer;
+      color: white;
+      background-color: indigo;
+      border: none;
+      border-radius: 5px;
+    }
+  }
+
+  &__instance {
+    border-bottom: 2px solid indigo;
+
+    &-title {
+      margin-bottom: 0;
+    }
+
+    &-doi {
+      word-break: break-all;
+    }
+  }
+  &__textarea {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 35px;
+
+    &-input {
+      resize: none;
+      width: 100%;
+      border: 2px solid indigo;
+      border-radius: 5px;
+    }
+  }
+}

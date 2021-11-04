@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { UserDoc, User } from "./user";
+import { UserDoc } from "./user";
 import { ContactDoc } from "./contact";
 
 import { updateIfCurrentPlugin } from "mongoose-update-if-current";
@@ -15,14 +15,19 @@ interface ProfileAttrs {
   school: string;
   profession: string;
   academicTitle: string;
-  publications: { title: string; description: string; time: Date }[];
+  publications: {
+    title: string;
+    description: string;
+    time: Date;
+    doi: string;
+  }[];
   conferences: [];
   contacts: [ContactDoc];
   events: [string];
   notifications: [];
   posts: [string];
   comments: [string];
-  phoneNumber: any;
+  phoneNumber: string;
 }
 
 interface ProfileModel extends mongoose.Model<ProfileDoc> {
@@ -39,7 +44,12 @@ interface ProfileDoc extends mongoose.Document {
   school: string;
   profession: string;
   academicTitle: string;
-  publications: { title: string; description: string; time: string }[];
+  publications: {
+    title: string;
+    description: string;
+    time: string;
+    doi: string;
+  }[];
   conferences: [];
   contacts: [ContactDoc];
   events: [string];
@@ -146,16 +156,23 @@ profileSchema.statics.build = (attrs: ProfileAttrs) => {
   return new Profile({
     _id: attrs._id,
     user: attrs.user,
-    // age: attrs.age,
-    // birthdate: attrs.birthdate,
-    // aboutMe: attrs.aboutMe,
+    age: attrs.age,
+    birthdate: attrs.birthdate,
+    aboutMe: attrs.aboutMe,
     profilePhoto: attrs.profilePhoto,
+    school: attrs.school,
+    profession: attrs.profession,
+    academicTitle: attrs.academicTitle,
+    publications: attrs.publications,
+    conferences: attrs.conferences,
+    contacts: attrs.contacts,
+    events: attrs.events,
+    notifications: attrs.notifications,
+    posts: attrs.posts,
+    comments: attrs.comments,
+    phoneNumber: attrs.phoneNumber,
+
     createdAt: new Date(Date.now()).toString(),
-    // school: attrs.school,
-    // profession: attrs.profession,
-    // experiences: attrs.experiences,
-    // currentJob: attrs.currentJob,
-    // phoneNumber: attrs.phoneNumber,
   });
 };
 
@@ -165,3 +182,41 @@ const Profile = mongoose.model<ProfileDoc, ProfileModel>(
 );
 
 export { Profile };
+
+// _id: attrs._id,
+//     user: attrs.user,
+//     age: attrs.age,
+//     birthdate: attrs.birthdate,
+//     aboutMe: attrs.aboutMe,
+//     profilePhoto: attrs.profilePhoto,
+//     createdAt: new Date(Date.now()).toString(),
+//     school: attrs.school,
+//     profession: attrs.profession,
+//     experiences: attrs.experiences,
+//     currentJob: attrs.currentJob,
+// phoneNumber: attrs.phoneNumber,
+
+// user: UserDoc;
+// age: string;
+// birthdate: string;
+// aboutMe: string;
+// profilePhoto: string;
+// createdAt: string;
+// school: string;
+// profession: string;
+// academicTitle: string;
+// publications: {
+//   title: string;
+//   description: string;
+//   time: string;
+//   doi: string;
+// }[];
+// conferences: [];
+// contacts: [ContactDoc];
+// events: [string];
+// notifications: [];
+// posts: [string];
+// comments: [string];
+
+// phoneNumber: string;
+// version: number;

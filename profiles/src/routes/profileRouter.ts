@@ -36,13 +36,13 @@ router
   .put(requireAuth, profileController.deleteValueFromArrayProfile);
 
 router
-  .route("/:_id/photo")
+  .route("/id/:_id/photo")
   .patch(requireAuth, profileController.patchProfilePhoto);
 
 router
-  .route("/:_id/experience")
-  .post(requireAuth, validateRequest, profileController.createExperience)
-  .patch(requireAuth, validateRequest, profileController.patchExperience);
+  .route("/id/:_id/publications")
+  .post(requireAuth, validateRequest, profileController.createPublication);
+// .delete(requireAuth, validateRequest, profileController.deletePublication);
 
 router
   .route("/email/:email")

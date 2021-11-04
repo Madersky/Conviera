@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from "react";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = ({ currentUser }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,10 +19,10 @@ const Navbar = ({ currentUser }) => {
 
   const pVariants = {
     opened: {
-      display: 'block',
+      display: "block",
     },
     closed: {
-      display: 'none',
+      display: "none",
     },
   };
 
@@ -38,16 +38,14 @@ const Navbar = ({ currentUser }) => {
         >
           <i className={className}></i>
 
-          {/* {isOpen && ( */}
           <motion.p
             key={label}
-            style={{ display: 'none' }}
-            animate={isOpen ? 'opened' : 'closed'}
+            style={{ display: "none" }}
+            animate={isOpen ? "opened" : "closed"}
             variants={pVariants}
           >
             {label}
           </motion.p>
-          {/* )} */}
         </a>
       );
     }
@@ -55,34 +53,34 @@ const Navbar = ({ currentUser }) => {
 
   const links = [
     currentUser && {
-      label: 'Home',
-      icon: 'bx bx-layer navbar__logo-icon',
-      href: '/',
+      label: "Home",
+      icon: "bx bx-layer navbar__logo-icon",
+      href: "/",
     },
 
     currentUser && {
-      label: 'Dashboard',
-      icon: 'bx bx-grid-alt navbar__icon',
-      href: '#',
+      label: "Conferences",
+      icon: "bx bx-chalkboard navbar__icon",
+      href: "#",
     },
     currentUser && {
-      label: 'Messages',
-      icon: 'bx bx-message-square-detail navbar__icon',
-      href: '#',
+      label: "Messages",
+      icon: "bx bx-message-square-detail navbar__icon",
+      href: "#",
     },
     currentUser && {
-      label: 'Bookmark',
-      icon: 'bx bx-bookmark navbar__icon',
-      href: '#',
+      label: "Bookmark",
+      icon: "bx bx-bookmark navbar__icon",
+      href: "#",
     },
     currentUser && {
-      label: 'Files',
-      icon: 'bx bx-folder navbar__icon',
-      href: '#',
+      label: "Files",
+      icon: "bx bx-folder navbar__icon",
+      href: "#",
     },
     currentUser && {
-      label: 'Profile',
-      icon: 'bx bx-user navbar__icon',
+      label: "Profile",
+      icon: "bx bx-user navbar__icon",
       href: `/profiles/${currentUser._id}`,
     },
   ]
@@ -99,19 +97,19 @@ const Navbar = ({ currentUser }) => {
 
   const authLinks = [
     currentUser && {
-      label: 'SignOut',
-      icon: 'bx bx-log-out navbar__icon',
-      href: '/auth/signout',
+      label: "SignOut",
+      icon: "bx bx-log-out navbar__icon",
+      href: "/auth/signout",
     },
     !currentUser && {
-      label: 'Sign In',
-      icon: 'bx bx-log-in navbar__icon',
-      href: '/auth/signin',
+      label: "Sign In",
+      icon: "bx bx-log-in navbar__icon",
+      href: "/auth/signin",
     },
     !currentUser && {
-      label: 'Sign Up',
-      icon: 'bi bi-person-plus navbar__icon',
-      href: '/auth/signup',
+      label: "Sign Up",
+      icon: "bi bi-person-plus navbar__icon",
+      href: "/auth/signup",
     },
   ]
     .filter((linkConfig) => linkConfig)
@@ -128,15 +126,8 @@ const Navbar = ({ currentUser }) => {
     });
 
   return (
-    <motion.nav
-      className="navbar"
-      animate={isOpen ? 'opened' : 'closed'}
-      // variants={navVariants}
-    >
-      <ul
-        className="navbar__list"
-        // style={isOpen ? { display: 'flex' } : { display: 'none' }}
-      >
+    <motion.nav className="navbar" animate={isOpen ? "opened" : "closed"}>
+      <ul className="navbar__list">
         {currentUser && (
           <li className="navbar__list-item--top">
             <i
@@ -146,7 +137,7 @@ const Navbar = ({ currentUser }) => {
 
             {isOpen && (
               <motion.p
-                animate={isOpen ? 'open' : 'close'}
+                animate={isOpen ? "open" : "close"}
                 variants={pVariants}
                 onClick={() => setIsOpen((isOpen) => !isOpen)}
               >

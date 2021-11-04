@@ -1,16 +1,21 @@
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/router";
 import UseRequest from "../../../hooks/use-request";
+import Profile from "../../../pages/profiles/[userId]";
 
 const ImagePanel = ({ profile, currentUser }) => {
-  const [profilePhoto, setProfilePhoto] = useState();
+  const router = useRouter();
+  const { userId } = router.query;
+
+  const [profilePhoto, setProfilePhoto] = useState(undefined);
   const [profilePhotoName, setProfilePhotoName] = useState("Choose file");
-  const [photoUrl, setPhotoUrl] = useState(profile.profilePhoto);
+  const [photoUrl, setPhotoUrl] = useState(undefined);
   const isInitialMount = useRef(true);
 
   const [isOpen, setIsOpen] = useState(false);
 
   const [patchProfilePhotoRequest, patchProfilePhotoErrors] = UseRequest({
-    url: `/api/profiles/${currentUser._id}/photo`,
+    url: `/api/profiles/id/${currentUser._id}/photo`,
     method: "patch",
     body: {
       photoUrl: photoUrl,
@@ -25,7 +30,12 @@ const ImagePanel = ({ profile, currentUser }) => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
     } else {
-      patchProfilePhotoRequest();
+      if (userId === currentUser._id && profilePhoto !== undefined) {
+        patchProfilePhotoRequest();
+        return;
+      } else {
+        console.log("nie tym razem hahaha");
+      }
     }
   }, [photoUrl]);
 
@@ -71,51 +81,55 @@ const ImagePanel = ({ profile, currentUser }) => {
     }
   };
 
-  const onClick = (e) => {
+  const onClick = () => {
     setIsOpen(!isOpen);
   };
   return (
     <div className="image-container">
       <div className="image">
         <img
-          src={photoUrl}
+          className="image__profile-photo"
+          src={
+            photoUrl === undefined
+              ? profile.profilePhoto
+              : userId === currentUser._id
+              ? photoUrl
+              : profile.profilePhoto
+          }
           onClick={onClick}
-          style={{
-            position: "relative",
-            minWidth: "200px",
-            maxWidth: "200px",
-            minHeight: "200px",
-            maxHeight: "200px",
-            cursor: "pointer",
-          }}
-        ></img>
-        <form
-          onSubmit={onSubmit}
-          className="image__form"
-          style={isOpen === true ? { display: "flex" } : { display: "none" }}
-        >
-          <div className="image__form-container">
-            <label>
-              {profilePhotoName}
-              <input
-                className="image__form-submit"
-                type="file"
-                name="photo"
-                onChange={onChange}
-              />
-            </label>
-          </div>
-          <button
-            type="submit"
-            style={
-              profilePhotoName !== "Choose file"
-                ? { display: "flex" }
-                : { display: "none" }
-            }
+          style={userId === currentUser._id ? { cursor: "pointer" } : undefined}
+        />
+        {userId === currentUser._id ? (
+          <form
+            onSubmit={onSubmit}
+            className="image__form"
+            style={isOpen === true ? { display: "flex" } : { display: "none" }}
           >
-            Submit
-          </button>
-        </form>
+            <div className="image__form-container">
+              <label>
+                {profilePhotoName}
+                <input
+                  className="image__form-submit"
+                  type="file"
+                  name="photo"
+                  onChange={onChange}
+                />
+              </label>
+            </div>
+            <button
+              type="submit"
+              style={
+                profilePhotoName !== "Choose file"
+                  ? { display: "flex" }
+                  : { display: "none" }
+              }
+            >
+              Submit
+            </button>
+          </form>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

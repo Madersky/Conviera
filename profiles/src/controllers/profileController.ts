@@ -97,14 +97,14 @@ exports.getProfileByEmail = async (req: Request, res: Response) => {
   }
 };
 
-exports.createExperience = async (req: Request, res: Response) => {
+exports.createPublication = async (req: Request, res: Response) => {
   try {
-    const newExperience = req.body.experience;
+    const newPublication = req.body.publications;
     const profile = await Profile.findByIdAndUpdate(
       req.params._id,
       {
         $addToSet: {
-          experiences: newExperience,
+          publications: newPublication,
         },
       },
       {
@@ -121,35 +121,44 @@ exports.createExperience = async (req: Request, res: Response) => {
   }
 };
 
-exports.patchExperience = async (req: Request, res: Response) => {
-  try {
-    const experience = req.body.experience;
-    console.log(experience);
+// exports.deletePublication = async (req: Request, res: Response) => {
+//   try {
+//     const publication = req.body.publications;
+//     const profile = await Profile.
+//   } catch {}
+// };
 
-    // ZMIANA ISTANIEJĄEGO EXPERIENCE
-    const profile = await Profile.findByIdAndUpdate(
-      req.params._id,
-      {
-        $set: {
-          "experiences.$[elem].description": experience.description,
-          "experiences.$[elem].title": experience.title,
-        },
-      },
-      {
-        new: true,
-        multi: true,
-        arrayFilters: [{ "elem.title": { $eq: req.body.oldTitle } }],
-      }
-    );
-    if (!profile) {
-      throw new Error("Profile not found");
-    }
-    await profile.save();
-    res.status(200).send({ profile: profile || null });
-  } catch (err) {
-    res.status(400).send(`Error! ${err}`);
-  }
-};
+// exports.patchPublications = async (req: Request, res: Response) => {
+//   try {
+//     const publication = req.body.publications;
+//     console.log(publication);
+
+//     // ZMIANA ISTANIEJĄEGO EXPERIENCE
+//     const profile = await Profile.findByIdAndUpdate(
+//       req.params._id,
+//       {
+//         $set: {
+//           "publications.$[elem].title": publication.title,
+//           "publications.$[elem].time": publication.time,
+//           "publications.$[elem].doi": publication.doi,
+//           "publications.$[elem].description": publication.description,
+//         },
+//       },
+//       {
+//         new: true,
+//         multi: true,
+//         // arrayFilters: [{ "elem.title": { $eq: req.body.oldTitle } }],
+//       }
+//     );
+//     if (!profile) {
+//       throw new Error("Profile not found");
+//     }
+//     await profile.save();
+//     res.status(200).send({ profile: profile || null });
+//   } catch (err) {
+//     res.status(400).send(`Error! ${err}`);
+//   }
+// };
 
 exports.patchProfilePhoto = async (req: Request, res: Response) => {
   try {
@@ -198,7 +207,7 @@ exports.deleteValueFromArrayProfile = async (req: Request, res: Response) => {
     }
 
     console.log(
-      `Usunieto takie value: ${req.body.value}, z takiej tablicy: ${req.body.tab}`
+      `Usunieto takie value: ${value}, z takiej tablicy: ${req.body.tab}`
     );
     await profile.save();
     res.status(200).send({ profile: profile || null });

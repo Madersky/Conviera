@@ -14,7 +14,6 @@
   &__section-photo {
     display: flex;
     justify-content: center;
-    flex: 1;
   }
 
   &__section-basic {
@@ -31,6 +30,10 @@
       top: 15px;
       font-size: 32px;
       color: indigo;
+
+      &-icon {
+        cursor: pointer;
+      }
     }
 
     &-name {

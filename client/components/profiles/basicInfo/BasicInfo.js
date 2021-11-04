@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import Link from "next/dist/client/link";
 
 import Details from "./Details";
 import ImagePanel from "./ImagePanel";
@@ -14,9 +15,16 @@ const BasicInfo = ({ profile, currentUser }) => {
         />
       </div>
       <div className="basic-info__section-basic">
-        <div className="basic-info__section-basic-edit">
-          <i className="bx bx-edit"></i>
-        </div>
+        {profile.user._id === currentUser._id ? (
+          <div className="basic-info__section-basic-edit">
+            <Link href={`${currentUser._id}/edit`}>
+              <i className="bx bx-edit basic-info__section-basic-edit-icon"></i>
+            </Link>
+          </div>
+        ) : (
+          ""
+        )}
+
         <p className="basic-info__section-basic-name">
           {profile.user.firstname} {profile.user.lastname}
         </p>

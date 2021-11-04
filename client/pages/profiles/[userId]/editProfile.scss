@@ -1,0 +1,66 @@
+.edit-profile {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  width: 1200px;
+  margin: 35px 30px 35px 30px;
+  align-items: flex-start;
+  justify-content: center;
+
+  @media (max-width: 1364px) {
+    width: 1000px;
+  }
+
+  @media (max-width: 1200px) {
+    width: 900px;
+  }
+
+  @media (max-width: 992px) {
+    width: 800px;
+  }
+
+  @media (max-width: 768px) {
+    width: 700px;
+  }
+
+  @media (max-width: 576px) {
+    margin: 60px 15px 0px 15px;
+  }
+
+  &__close {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: fit-content;
+    height: fit-content;
+
+    &-icon {
+      font-size: 48px;
+      cursor: pointer;
+    }
+  }
+
+  &__form {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    margin-bottom: 35px;
+    row-gap: 25px;
+
+    &-section {
+      &--top {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        column-gap: 50px;
+        justify-content: space-between;
+      }
+    }
+  }
+
+  &__publications {
+    display: flex;
+    width: 100%;
+  }
+}

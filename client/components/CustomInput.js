@@ -10,19 +10,13 @@ const CustomInput = ({
   iClass,
 }) => {
   return (
-    <div>
-      <label className="" htmlFor={id}>
-        {name}
-      </label>
+    <div className="custom-input">
+      <label htmlFor={id}>{name}</label>
 
-      <div className={className}>
-        {iClass ? (
-          <span className="">
-            <i className={`bi ${iClass}`}></i>
-          </span>
-        ) : null}
-
+      <div className={className ? className : "custom-input__instance"}>
+        {iClass ? <i className={`${iClass}`}></i> : null}
         <input
+          className={`custom-input__instance-input`}
           id={id}
           type={type}
           value={value}
@@ -30,7 +24,7 @@ const CustomInput = ({
           placeholder={placeholder}
         ></input>
       </div>
-      <p className="">{error}</p>
+      <p className="custom-input__error">{error}</p>
     </div>
   );
 };

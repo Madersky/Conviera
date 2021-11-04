@@ -1,19 +1,19 @@
-import { useState, useEffect, useRef } from 'react';
-import useRequest from '../../../hooks/use-request';
-import CustomInput from '../../CustomInput';
-import CreateHobby from './CreateHobby';
+import { useState, useEffect, useRef } from "react";
+import useRequest from "../../../hooks/use-request";
+import CustomInput from "../../CustomInput";
+import CreateHobby from "./CreateHobby";
 
 const Hobbys = ({ hobbys, currentUser }) => {
-  const [chosenHobby, setChosenHobby] = useState('');
+  const [chosenHobby, setChosenHobby] = useState("");
   const [activeHobbys, setActiveHobbys] = useState(hobbys);
   const [showCreateHobby, setShowCreateHobby] = useState(false);
 
   const isInitialMount = useRef(true);
   const [deleteHobby, deleteHobbyError] = useRequest({
     url: `/api/profiles/id/${currentUser._id}`,
-    method: 'put',
+    method: "put",
     body: {
-      tab: 'hobbys',
+      tab: "hobbys",
       value: chosenHobby,
     },
     onSuccess: () => {},
@@ -45,7 +45,7 @@ const Hobbys = ({ hobbys, currentUser }) => {
                   className="btn bi bi-patch-minus"
                   value={hobby}
                   onClick={(e) => {
-                    setChosenHobby(e.target.value);
+                    setChosenHobby(JSON.stringify(e.target.value));
                   }}
                 ></button>
                 {deleteHobbyError}

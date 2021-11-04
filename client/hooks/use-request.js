@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { useState } from 'react';
+import axios from "axios";
+import { useState } from "react";
 
 const UseRequest = ({ url, method, body, onSuccess }) => {
   const [errors, setErrors] = useState(null);
@@ -28,13 +28,6 @@ const UseRequest = ({ url, method, body, onSuccess }) => {
         objectFields[element] = element;
       });
       setErrors({
-        default: (
-          <div className="lead text-center text-danger fw-bold mt-3">
-            {err.response.data.errors.map((err) => (
-              <div key={err.message}>{err.message}</div>
-            ))}
-          </div>
-        ),
         fields: objectFields,
         message: objectMessage,
       });

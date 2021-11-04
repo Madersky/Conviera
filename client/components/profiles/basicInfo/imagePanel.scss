@@ -1,15 +1,18 @@
 .image-container {
   position: relative;
   display: flex;
-  margin-top: 10px;
+
   align-self: flex-start;
   align-items: center;
   justify-content: center;
   flex-direction: column;
 }
 .image {
-  img {
+  &__profile-photo {
     border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    position: relative;
   }
 
   &__form {

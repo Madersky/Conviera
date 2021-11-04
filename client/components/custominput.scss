@@ -1,0 +1,20 @@
+.custom-input {
+  &__instance {
+    display: flex;
+    align-items: center;
+    column-gap: 15px;
+
+    i {
+      color: indigo;
+      font-size: 42px;
+    }
+
+    &-input {
+      width: 100%;
+      font-size: 16px;
+      border: 2px solid indigo;
+      border-radius: 5px;
+      padding: 4px;
+    }
+  }
+}

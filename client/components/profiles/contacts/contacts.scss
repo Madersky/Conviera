@@ -1,0 +1,17 @@
+.contacts {
+  &__header {
+    margin: 0;
+    width: fit-content;
+    border-bottom: 2px solid indigo;
+  }
+
+  &__instance {
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 75px;
+      height: 75px;
+    }
+  }
+}

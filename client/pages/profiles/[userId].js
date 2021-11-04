@@ -1,6 +1,8 @@
 import { useState } from "react";
 
 import BasicInfo from "../../components/profiles/basicInfo/BasicInfo";
+import Contacts from "../../components/profiles/contacts/Contacts";
+import Publications from "../../components/profiles/publications/Publications";
 
 const Profile = ({ profile, currentUser }) => {
   const [editMode, setEditMode] = useState(false);
@@ -12,19 +14,22 @@ const Profile = ({ profile, currentUser }) => {
           <BasicInfo profile={profile} currentUser={currentUser} />
         </div>
 
-        <div className="profile__aboutMe">
-          <h2>About me!</h2>
+        <div className="profile__about">
+          <h2>About me</h2>
           <p>{profile.aboutMe}</p>
         </div>
         {/* <div className="profile__hobbys">
           <Hobbys hobbys={hobbys} currentUser={currentUser} />{' '}
         </div> */}
-        <div className="profile__aboutMe">
-          <h4>Phone Number</h4>
-          <p>{profile.phoneNumber}</p>
-        </div>
+        <div className="profile__posts"></div>
       </div>
       <div className="profile__container--right-side">
+        <div className="profile__publications">
+          <Publications publications={profile.publications} />
+        </div>
+        <div className="profile__contacts">
+          <Contacts contacts={profile.contacts} />
+        </div>
         {/* <div className="profile__experience"> */}
         {/* <CustomExperience
             experiences={profile.experiences}
@@ -49,7 +54,6 @@ Profile.getInitialProps = async (context, client, currentUser) => {
     `api/profiles/id/${context.query.userId}`
   );
 
-  console.log(profileRes.data.profile.contacts);
   return {
     ...profileRes.data,
     currentUser,
