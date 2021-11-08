@@ -4,18 +4,18 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = ({ currentUser }) => {
   const [isOpen, setIsOpen] = useState(false);
-  // const navVariants = {
-  //   opened: {
-  //     width: '250px',
-  //     stiffness: 200,
-  //     transition: {
-  //       when: 'beforeChildren',
-  //     },
-  //   },
-  //   closed: {
-  //     width: '68px',
-  //   },
-  // };
+  const navVariants = {
+    opened: {
+      width: "250px",
+      stiffness: 200,
+      transition: {
+        when: "beforeChildren",
+      },
+    },
+    closed: {
+      width: "68px",
+    },
+  };
 
   const pVariants = {
     opened: {
@@ -61,7 +61,7 @@ const Navbar = ({ currentUser }) => {
     currentUser && {
       label: "Conferences",
       icon: "bx bx-chalkboard navbar__icon",
-      href: "#",
+      href: "/conferences/dashboard",
     },
     currentUser && {
       label: "Messages",
@@ -126,7 +126,11 @@ const Navbar = ({ currentUser }) => {
     });
 
   return (
-    <motion.nav className="navbar" animate={isOpen ? "opened" : "closed"}>
+    <motion.nav
+      className="navbar"
+      variants={navVariants}
+      animate={isOpen ? "opened" : "closed"}
+    >
       <ul className="navbar__list">
         {currentUser && (
           <li className="navbar__list-item--top">

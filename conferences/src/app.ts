@@ -4,7 +4,7 @@ import { json } from "body-parser";
 import cookieSession from "cookie-session";
 import { errorHandler, NotFoundError, currentUser } from "@conviera/common";
 
-// const profileRouter = require("./routes/profileRouter");
+const conferenceRouter = require("./routes/conferenceRouter");
 
 const app = express();
 app.set("trust proxy", true);
@@ -17,7 +17,7 @@ app.use(
 );
 
 app.use(currentUser);
-// app.use("/api/profiles", profileRouter);
+app.use("/api/conferences", conferenceRouter);
 
 app.all("*", async (req, res) => {
   throw new NotFoundError();

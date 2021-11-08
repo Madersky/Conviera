@@ -23,6 +23,7 @@ interface ProfileAttrs {
   }[];
   conferences: [];
   contacts: [ContactDoc];
+  organizations: string[];
   events: [string];
   notifications: [];
   posts: [string];
@@ -52,6 +53,7 @@ interface ProfileDoc extends mongoose.Document {
   }[];
   conferences: [];
   contacts: [ContactDoc];
+  organizations: string[];
   events: [string];
   notifications: [];
   posts: [string];
@@ -103,6 +105,11 @@ const profileSchema = new mongoose.Schema(
     conferences: {
       type: [mongoose.Schema.Types.Mixed],
       ref: "Conference",
+      required: false,
+    },
+    organizations: {
+      type: [mongoose.Schema.Types.Mixed],
+      ref: "Organizations",
       required: false,
     },
     events: {
@@ -165,6 +172,7 @@ profileSchema.statics.build = (attrs: ProfileAttrs) => {
     academicTitle: attrs.academicTitle,
     publications: attrs.publications,
     conferences: attrs.conferences,
+    organizations: attrs.organizations,
     contacts: attrs.contacts,
     events: attrs.events,
     notifications: attrs.notifications,

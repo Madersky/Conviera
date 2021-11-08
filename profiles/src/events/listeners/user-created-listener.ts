@@ -136,6 +136,7 @@ export class UserCreatedListener extends Listener<UserCreatedEvent> {
       createdAt: new Date(Date.now()),
       publications: [populateMany(publicationsArray, 3)],
       conferences: [],
+      organizations: [],
       contacts: [],
       events: [],
       posts: [],
