@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 interface UserAttrs {
   _id: string;
-  role: string;
   email: string;
   firstname: string;
   lastname: string;
@@ -10,7 +9,6 @@ interface UserAttrs {
 
 export interface UserDoc extends mongoose.Document {
   email: string;
-  role: string;
   firstname: string;
   lastname: string;
   version: number;
@@ -22,10 +20,6 @@ interface UserModel extends mongoose.Model<UserDoc> {
 
 const userSchema = new mongoose.Schema(
   {
-    role: {
-      type: String,
-      required: false,
-    },
     email: {
       type: String,
       require: true,
@@ -54,7 +48,6 @@ userSchema.plugin(updateIfCurrentPlugin);
 userSchema.statics.build = (attrs: UserAttrs) => {
   return new User({
     _id: attrs._id,
-    role: attrs.role,
     email: attrs.email,
     firstname: attrs.firstname,
     lastname: attrs.lastname,

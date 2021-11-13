@@ -1,0 +1,43 @@
+.conference-instance {
+  border-bottom: 4px solid indigo;
+
+  &:last-child {
+    border: none;
+  }
+
+  &__basic-info {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    // column-gap: 15px;
+    justify-content: space-between;
+
+    color: indigo;
+    font-weight: bolder;
+    border-bottom: 2px solid indigo;
+
+    &-group {
+      // width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      i {
+        padding-right: 5px;
+        font-size: 32px;
+      }
+    }
+  }
+
+  &__name {
+    width: fit-content;
+
+    cursor: pointer;
+  }
+
+  &__organizers {
+    width: fit-content;
+    text-align: right;
+    float: right;
+  }
+}

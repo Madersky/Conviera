@@ -1,8 +1,8 @@
 import { Message } from "node-nats-streaming";
 import { Subjects, Listener, UserCreatedEvent } from "@conviera/common";
-import { User, UserDoc } from "../../models/user";
+import { User, UserDoc } from "../../../models/user";
 
-import { Profile } from "../../models/profile";
+import { Profile } from "../../../models/profile";
 
 //
 //populate

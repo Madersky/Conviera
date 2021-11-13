@@ -13,7 +13,6 @@ interface conferenceAttrs {
   conferenceEndDate: Date;
 
   mode: string;
-  conferenceCountry: string;
   conferenceVenue: string;
   conferenceCity: string;
   conferenceStreet: string;
@@ -25,11 +24,9 @@ interface conferenceAttrs {
   organizers: string[];
   creator: UserDoc;
   moderators: UserDoc[];
-  committee: UserDoc[];
   speakers: UserDoc[];
   participants: UserDoc[];
   applicants: { user: UserDoc; attachment: string }[];
-  sessions: any[];
   speeches: {
     user: UserDoc;
     topic: string;
@@ -49,11 +46,11 @@ interface conferenceAttrs {
   createdAt: string;
 }
 
-interface ConferenceModel extends mongoose.Model<ConferenceDoc> {
+interface ConferencesModel extends mongoose.Model<ConferenceDoc> {
   build(attrs: conferenceAttrs): ConferenceDoc;
 }
 
-interface ConferenceDoc extends mongoose.Document {
+export interface ConferenceDoc extends mongoose.Document {
   name: string;
   description: string;
   registrationStartDate: Date;
@@ -62,7 +59,6 @@ interface ConferenceDoc extends mongoose.Document {
   conferenceEndDate: Date;
 
   mode: string;
-  conferenceCountry: string;
   conferenceVenue: string;
   conferenceCity: string;
   conferenceStreet: string;
@@ -71,14 +67,12 @@ interface ConferenceDoc extends mongoose.Document {
   discipline: string[];
   keywords: string[];
 
-  organizers: string[];
+  organizers: UserDoc[];
   creator: UserDoc;
   moderators: UserDoc[];
-  committee: UserDoc[];
   speakers: UserDoc[];
   participants: UserDoc[];
   applicants: { user: UserDoc; attachment: string }[];
-  sessions: any[];
   speeches: {
     user: UserDoc;
     topic: string;
@@ -89,14 +83,13 @@ interface ConferenceDoc extends mongoose.Document {
 
   cost: string;
 
-  contactEmail: string;
-  contactSite: string;
+  email: string;
+  site: string;
   phoneNumber: string;
 
   posts: string[];
 
   version: number;
-  createdAt: string;
 }
 
 const conferenceSchema = new mongoose.Schema(
@@ -128,10 +121,6 @@ const conferenceSchema = new mongoose.Schema(
     mode: {
       type: String,
       required: true,
-    },
-    conferenceCountry: {
-      type: String,
-      required: false,
     },
     conferenceVenue: {
       type: String,
@@ -171,10 +160,6 @@ const conferenceSchema = new mongoose.Schema(
       ref: "User",
       required: false,
     },
-    committee: {
-      type: [mongoose.Schema.Types.Mixed],
-      required: false,
-    },
     participants: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: "User",
@@ -182,10 +167,6 @@ const conferenceSchema = new mongoose.Schema(
     },
     applicants: {
       type: [mongoose.Schema.Types.Mixed],
-      required: false,
-    },
-    sessions: {
-      type: [mongoose.Schema.Types.ObjectId],
       required: false,
     },
     speeches: {
@@ -240,7 +221,6 @@ conferenceSchema.statics.build = (attrs: conferenceAttrs) => {
     conferenceEndDate: attrs.conferenceEndDate,
 
     mode: attrs.mode,
-    conferenceCountry: attrs.conferenceCountry,
     conferenceVenue: attrs.conferenceVenue,
     conferenceCity: attrs.conferenceCity,
     conferenceStreet: attrs.conferenceStreet,
@@ -252,11 +232,9 @@ conferenceSchema.statics.build = (attrs: conferenceAttrs) => {
     organizers: attrs.organizers,
     creator: attrs.creator,
     moderators: attrs.moderators,
-    committee: attrs.committee,
     speakers: attrs.speakers,
     participants: attrs.participants,
     applicants: attrs.applicants,
-    sessions: attrs.sessions,
     speeches: attrs.speeches,
 
     cost: attrs.cost,
@@ -271,7 +249,7 @@ conferenceSchema.statics.build = (attrs: conferenceAttrs) => {
   });
 };
 
-const Conference = mongoose.model<ConferenceDoc, ConferenceModel>(
+const Conference = mongoose.model<ConferenceDoc, ConferencesModel>(
   "Conference",
   conferenceSchema
 );

@@ -1,6 +1,6 @@
 import { Message } from "node-nats-streaming";
 import { Listener, UserUpdatedEvent, Subjects } from "@conviera/common";
-import { User } from "../../models/user";
+import { User } from "../../../models/user";
 
 // DZIALA, ZMIENIC POD APLIKACJE
 export class UserUpdatedListener extends Listener<UserUpdatedEvent> {

@@ -4,27 +4,27 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = ({ currentUser }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const navVariants = {
-    opened: {
-      width: "250px",
-      stiffness: 200,
-      transition: {
-        when: "beforeChildren",
-      },
-    },
-    closed: {
-      width: "68px",
-    },
-  };
+  // const navVariants = {
+  //   opened: {
+  //     width: "250px",
+  //     stiffness: 200,
+  //     transition: {
+  //       when: "beforeChildren",
+  //     },
+  //   },
+  //   closed: {
+  //     width: "68px",
+  //   },
+  // };
 
-  const pVariants = {
-    opened: {
-      display: "block",
-    },
-    closed: {
-      display: "none",
-    },
-  };
+  // const pVariants = {
+  //   opened: {
+  //     display: "block",
+  //   },
+  //   closed: {
+  //     display: "none",
+  //   },
+  // };
 
   const NavButton = React.forwardRef(
     ({ onClick, href, className, label }, ref) => {
@@ -42,7 +42,7 @@ const Navbar = ({ currentUser }) => {
             key={label}
             style={{ display: "none" }}
             animate={isOpen ? "opened" : "closed"}
-            variants={pVariants}
+            // variants={pVariants}
           >
             {label}
           </motion.p>
@@ -128,8 +128,8 @@ const Navbar = ({ currentUser }) => {
   return (
     <motion.nav
       className="navbar"
-      variants={navVariants}
-      animate={isOpen ? "opened" : "closed"}
+      // variants={navVariants}
+      // animate={isOpen ? "opened" : "closed"}
     >
       <ul className="navbar__list">
         {currentUser && (
@@ -142,7 +142,7 @@ const Navbar = ({ currentUser }) => {
             {isOpen && (
               <motion.p
                 animate={isOpen ? "open" : "close"}
-                variants={pVariants}
+                // variants={pVariants}
                 onClick={() => setIsOpen((isOpen) => !isOpen)}
               >
                 Menu

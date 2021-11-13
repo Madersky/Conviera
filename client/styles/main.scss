@@ -8,8 +8,14 @@
 @import "../components/profiles/basicInfo/basicInfo.scss";
 @import "../components/profiles/basicInfo/details.scss";
 @import "../components/profiles/basicInfo/imagePanel.scss";
+@import "../components/conferences/conferencesComponent.scss";
+@import "../components/conferences/createConference.scss";
+
 @import "../components/custominput.scss";
+
 @import "../pages/profiles/profile.scss";
 @import "../pages/profiles/[userId]/editProfile.scss";
-@import "../pages/conferences/conferences.scss";
+@import "../pages/conferences/[conferenceId].scss";
+@import "../pages/conferences/dashboard.scss";
+@import "../pages/conferences/new.scss";
 @import "../pages//index.scss";

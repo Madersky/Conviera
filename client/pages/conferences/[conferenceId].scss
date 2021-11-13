@@ -1,10 +1,9 @@
-.profile {
+.conference {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
-  column-gap: 25px;
   width: 1200px;
-
-  margin: 35px 30px 0 30px;
+  margin: 35px 30px 35px 30px;
   align-items: flex-start;
   justify-content: center;
 
@@ -28,19 +27,14 @@
     margin: 60px 15px 0px 15px;
   }
 
-  button {
-    background-color: indigo;
-    border: none;
-    color: white;
-    padding: 5px 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 2em;
-  }
-  &__container {
-    &--left-side {
+  &__dashboard {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    column-gap: 25px;
+
+    &--left {
       display: flex;
       flex: 1 55%;
 
@@ -57,8 +51,7 @@
         flex: 1 100%;
       }
     }
-    &--right-side {
-      // height: 90vh;
+    &--right {
       display: flex;
       flex: 1 35%;
       flex-flow: column wrap;
@@ -72,26 +65,13 @@
     }
   }
 
-  &__basic-info {
+  &__info {
     display: flex;
-    flex: 1 45%;
 
-    border-radius: 5px;
-    row-gap: 25px;
-    column-gap: 25px;
-  }
-
-  &__about {
-    h2 {
-      margin: 0;
+    &-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
     }
-  }
-
-  &__edit-profile {
-    display: flex;
-    flex: 1 45%;
-    justify-content: center;
-    border: 2px solid indigo;
-    border-radius: 5px;
   }
 }

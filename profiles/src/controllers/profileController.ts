@@ -12,7 +12,11 @@ exports.getAllProfiles = async (
   try {
     const allUsers = await User.find();
     const allProfiles = await Profile.find().populate("user");
-    // const allUsers = await User.find();
+    // .populate({
+    //   path: "conferences",
+    //   populate: { path: "creator", model: "User" },
+    // });
+
     res
       .status(200)
       .send({ profiles: allProfiles || null, users: allUsers || null });

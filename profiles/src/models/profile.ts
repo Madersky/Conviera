@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { UserDoc } from "./user";
 import { ContactDoc } from "./contact";
+import { ConferenceDoc } from "./conference";
 
 import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 
@@ -21,7 +22,7 @@ interface ProfileAttrs {
     time: Date;
     doi: string;
   }[];
-  conferences: [];
+  conferences: ConferenceDoc[];
   contacts: [ContactDoc];
   organizations: string[];
   events: [string];
@@ -51,7 +52,7 @@ interface ProfileDoc extends mongoose.Document {
     time: string;
     doi: string;
   }[];
-  conferences: [];
+  conferences: ConferenceDoc[];
   contacts: [ContactDoc];
   organizations: string[];
   events: [string];
@@ -103,7 +104,7 @@ const profileSchema = new mongoose.Schema(
       required: false,
     },
     conferences: {
-      type: [mongoose.Schema.Types.Mixed],
+      type: [mongoose.Schema.Types.ObjectId],
       ref: "Conference",
       required: false,
     },
