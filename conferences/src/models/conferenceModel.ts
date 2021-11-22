@@ -3,6 +3,11 @@ import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 
 import { UserDoc } from "./user";
 
+// interface ExtendUserDoc {
+//   user: UserDoc
+//   role: string
+// }
+
 interface conferenceAttrs {
   _id: string;
   name: string;
@@ -27,8 +32,8 @@ interface conferenceAttrs {
   moderators: UserDoc[];
   committee: UserDoc[];
   speakers: UserDoc[];
-  participants: UserDoc[];
-  applicants: { user: UserDoc; attachment: string }[];
+  participants: { user: UserDoc; role: string }[];
+  applicants: { user: UserDoc; role: string }[];
   sessions: any[];
   speeches: {
     user: UserDoc;
@@ -76,8 +81,8 @@ interface ConferenceDoc extends mongoose.Document {
   moderators: UserDoc[];
   committee: UserDoc[];
   speakers: UserDoc[];
-  participants: UserDoc[];
-  applicants: { user: UserDoc; attachment: string }[];
+  participants: { user: UserDoc; role: string }[];
+  applicants: { user: UserDoc; role: string }[];
   sessions: any[];
   speeches: {
     user: UserDoc;
@@ -176,8 +181,7 @@ const conferenceSchema = new mongoose.Schema(
       required: false,
     },
     participants: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: "User",
+      type: [mongoose.Schema.Types.Mixed],
       required: false,
     },
     applicants: {

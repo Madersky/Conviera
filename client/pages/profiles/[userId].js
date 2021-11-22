@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import BasicInfo from "../../components/profiles/basicInfo/BasicInfo";
-import Contacts from "../../components/profiles/contacts/Contacts";
+import UserList from "../../components/profiles/userList/UserList";
 import Publications from "../../components/profiles/publications/Publications";
 
 const Profile = ({ profile, currentUser }) => {
@@ -27,9 +27,9 @@ const Profile = ({ profile, currentUser }) => {
         <div className="profile__publications">
           <Publications publications={profile.publications} />
         </div>
-        <div className="profile__contacts">
+        {/* <div className="profile__contacts">
           <Contacts contacts={profile.contacts} />
-        </div>
+        </div> */}
         {/* <div className="profile__experience"> */}
         {/* <CustomExperience
             experiences={profile.experiences}

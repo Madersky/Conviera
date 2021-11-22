@@ -6,7 +6,6 @@ interface UserAttrs {
   firstname: string;
   lastname: string;
 }
-
 export interface UserDoc extends mongoose.Document {
   email: string;
   firstname: string;

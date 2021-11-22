@@ -10,7 +10,7 @@ export class ConferenceCreatedlistener extends Listener<ConferenceCreatedEvent> 
 
   async onMessage(data: ConferenceCreatedEvent["data"], msg: Message) {
     const conferenceData = data;
-    console.log(conferenceData);
+
     const conference = Conference.build(conferenceData);
     console.log(conference);
     await conference.save();

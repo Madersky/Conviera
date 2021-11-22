@@ -1,6 +1,6 @@
-.contacts {
+.user-list {
   &__header {
-    margin: 0;
+    margin: 0 0 15px 0;
     width: fit-content;
     border-bottom: 2px solid indigo;
   }
@@ -8,8 +8,12 @@
   &__instance {
     display: flex;
     align-items: center;
+    margin: 10px 0 10px 0;
 
     img {
+      border: 1px solid indigo;
+      margin-right: 25px;
+      border-radius: 50%;
       width: 75px;
       height: 75px;
     }

@@ -12,7 +12,7 @@ const CreateConference = ({ currentUser }) => {
   const [conferenceStartDate, setConferenceStartDate] = useState("");
   const [conferenceEndDate, setConferenceEndDate] = useState("");
 
-  const [mode, setMode] = useState("");
+  const [mode, setMode] = useState("remote");
   const [conferenceCountry, setConferenceCountry] = useState("");
   const [conferenceVenue, setConferenceVenue] = useState("");
   const [conferenceCity, setConferenceCity] = useState("");
@@ -32,12 +32,7 @@ const CreateConference = ({ currentUser }) => {
     url: `/api/conferences/create`,
     method: "post",
     body: {
-      creator: {
-        _id: currentUser._id,
-        email: currentUser.email,
-        firstname: currentUser.firstname,
-        lastname: currentUser.lastname,
-      },
+      creator: currentUser,
       name: name,
       description: description,
       registrationStartDate: registrationStartDate,
@@ -240,8 +235,8 @@ const CreateConference = ({ currentUser }) => {
             <div style={{ paddingBottom: "15px" }}>
               <label>Conference type</label>
               <select value={mode} onChange={(e) => setMode(e.target.value)}>
-                <option>Remote</option>
-                <option>Stationary</option>
+                <option>remote</option>
+                <option>stationary</option>
               </select>
             </div>
             <CustomInput

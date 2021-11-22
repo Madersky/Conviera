@@ -25,7 +25,7 @@ interface conferenceAttrs {
   creator: UserDoc;
   moderators: UserDoc[];
   speakers: UserDoc[];
-  participants: UserDoc[];
+  participants: { user: UserDoc; role: string }[];
   applicants: { user: UserDoc; attachment: string }[];
   speeches: {
     user: UserDoc;
@@ -71,7 +71,7 @@ export interface ConferenceDoc extends mongoose.Document {
   creator: UserDoc;
   moderators: UserDoc[];
   speakers: UserDoc[];
-  participants: UserDoc[];
+  participants: { user: UserDoc; role: string }[];
   applicants: { user: UserDoc; attachment: string }[];
   speeches: {
     user: UserDoc;
@@ -161,8 +161,7 @@ const conferenceSchema = new mongoose.Schema(
       required: false,
     },
     participants: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: "User",
+      type: [mongoose.Schema.Types.Mixed],
       required: false,
     },
     applicants: {

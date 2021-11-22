@@ -16,6 +16,7 @@ const UseRequest = ({ url, method, body, onSuccess }) => {
       return response.data;
     } catch (err) {
       const fields = err.response.data.errors.map((err) => err.param);
+      console.log(err)
       const errorMessage = err.response.data.errors.map((err) => err.msg);
       const objectFields = [];
       const objectMessage = [];

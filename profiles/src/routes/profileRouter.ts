@@ -17,6 +17,9 @@ const validator = require("../controllers/profileValidator");
 const profileController = require("../controllers/profileController");
 const router = express.Router();
 // getAllProfiles, createProfile, getProfileByUserId, patchProfile, getProfileByEmail
+
+//ZABEZPIECZYC!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 router.route("/").get(requireAuth, profileController.getAllProfiles);
 // .post(
 //   validator.validateProfile,

@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import UseRequest from "../../../hooks/use-request";
-import Profile from "../../../pages/profiles/[userId]";
 
 const ImagePanel = ({ profile, currentUser }) => {
   const router = useRouter();
@@ -33,8 +32,6 @@ const ImagePanel = ({ profile, currentUser }) => {
       if (userId === currentUser._id && profilePhoto !== undefined) {
         patchProfilePhotoRequest();
         return;
-      } else {
-        console.log("nie tym razem hahaha");
       }
     }
   }, [photoUrl]);
