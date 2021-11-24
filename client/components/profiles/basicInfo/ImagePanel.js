@@ -42,7 +42,7 @@ const ImagePanel = ({ profile, currentUser }) => {
 
     var name = randomBytes(32).toString("hex");
 
-    const response = await fetch("/api/s3", {
+    const response = await fetch("/api/profilePhotoUpdate", {
       method: "post",
       body: JSON.stringify({
         type: photo.type,

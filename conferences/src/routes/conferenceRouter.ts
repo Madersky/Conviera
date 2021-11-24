@@ -16,9 +16,9 @@ router
   .route("/id/:_id")
   .get(requireAuth, roleAssign, conferenceController.getConference);
 
-router
-  .route("/id/:_id/join")
-  .patch(requireAuth, conferenceController.addUserToConference);
+// router
+//   .route("/id/:_id/join")
+//   .patch(requireAuth, conferenceController.addUserToConference);
 router
   .route("/create")
   .post(requireAuth, conferenceController.createConference);

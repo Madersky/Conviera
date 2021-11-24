@@ -43,6 +43,15 @@ exports.getProfileByEmail = async (req: Request, res: Response) => {
   }
 };
 
+// exports.getProfileApplications = async (req: Request, res: Response) => {
+//   try {
+//     const profile = Profile.findById(req.params._id);
+//     const applications =
+//   } catch (err) {
+//     throw new Error(`ERROR !! ${err}`);
+//   }
+// };
+
 exports.createPublication = async (req: Request, res: Response) => {
   try {
     const newPublication = req.body.publications;

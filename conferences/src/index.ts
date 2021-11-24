@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { app } from "./app";
+import { ApplicationCreatedListener } from "./events/listeners/application-created-listener";
 import { UserCreatedListener } from "./events/listeners/user-created-listener";
 // import { UserUpdatedListener } from "./events/listeners/user-updated-listener";
 import { natsWrapper } from "./nats-wrapper";
@@ -35,6 +36,7 @@ const start = async () => {
     process.on("SIGTERM", () => natsWrapper.client.close());
 
     new UserCreatedListener(natsWrapper.client).listen();
+    new ApplicationCreatedListener(natsWrapper.client).listen();
     // new UserUpdatedListener(natsWrapper.client).listen();
 
     await mongoose.connect(process.env.MONGO_URI, {

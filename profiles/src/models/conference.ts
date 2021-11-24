@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { updateIfCurrentPlugin } from "mongoose-update-if-current";
+import { ApplicationDoc } from "./application";
 
 import { UserDoc } from "./user";
 
@@ -26,7 +27,7 @@ interface conferenceAttrs {
   moderators: UserDoc[];
   speakers: UserDoc[];
   participants: { user: UserDoc; role: string }[];
-  applicants: { user: UserDoc; attachment: string }[];
+  applications: ApplicationDoc[];
   speeches: {
     user: UserDoc;
     topic: string;
@@ -43,7 +44,7 @@ interface conferenceAttrs {
 
   posts: string[];
 
-  createdAt: string;
+  createdAt: Date;
 }
 
 interface ConferencesModel extends mongoose.Model<ConferenceDoc> {
@@ -72,7 +73,7 @@ export interface ConferenceDoc extends mongoose.Document {
   moderators: UserDoc[];
   speakers: UserDoc[];
   participants: { user: UserDoc; role: string }[];
-  applicants: { user: UserDoc; attachment: string }[];
+  applications: ApplicationDoc[];
   speeches: {
     user: UserDoc;
     topic: string;
@@ -164,8 +165,8 @@ const conferenceSchema = new mongoose.Schema(
       type: [mongoose.Schema.Types.Mixed],
       required: false,
     },
-    applicants: {
-      type: [mongoose.Schema.Types.Mixed],
+    applications: {
+      type: [mongoose.Schema.Types.ObjectId],
       required: false,
     },
     speeches: {
@@ -233,7 +234,7 @@ conferenceSchema.statics.build = (attrs: conferenceAttrs) => {
     moderators: attrs.moderators,
     speakers: attrs.speakers,
     participants: attrs.participants,
-    applicants: attrs.applicants,
+    applications: attrs.applications,
     speeches: attrs.speeches,
 
     cost: attrs.cost,
@@ -244,7 +245,7 @@ conferenceSchema.statics.build = (attrs: conferenceAttrs) => {
 
     posts: attrs.posts,
 
-    createdAt: new Date(Date.now()).toString(),
+    createdAt: new Date(Date.now()),
   });
 };
 

@@ -54,41 +54,20 @@ exports.getConference = async (req: Request, res: Response) => {
     //   (applicant) =>
     //     applicant.user._id.toString() === req.currentUser?._id.toString()
     // );
-    if (!res.locals.conference) {
-      throw new Error("bad data in request");
-    } else {
-      res.status(200).send({
-        conference: res.locals.conference,
-        role: res.locals.role,
-        isApplicant: res.locals.isApplicant,
-      });
-    }
+    // if (!res.locals.conference) {
+    //   throw new Error("bad data in request");
+    // } else {
+    res.status(200).send({
+      conference: res.locals.conference,
+      role: res.locals.role,
+    });
+    // }
 
     // res.status(200).send({
     //   conference: res.locals.conference,
     //   role: user?.role || "none",
     //   isApplicant: !!applicant,
     // });
-  } catch (err) {
-    res.status(404).send(`ERROR!! ${err}`);
-  }
-};
-
-exports.addUserToConference = async (req: Request, res: Response) => {
-  try {
-    const conference = await Conference.findById(req.params._id);
-    if (!conference) {
-      throw new Error();
-    }
-
-    conference.applicants.push({
-      user: req.body.user as UserDoc,
-      role: req.body.role as string,
-    });
-
-    await conference.save();
-
-    res.status(200).send({ conference: conference });
   } catch (err) {
     res.status(404).send(`ERROR!! ${err}`);
   }
@@ -108,7 +87,6 @@ exports.createConference = async (req: Request, res: Response) => {
     }
 
     await conference.save();
-    console.log("TO JEST CONFERENCE ZAPISANE DO BAZY", conference);
 
     await new ConferenceCreatedPublisher(natsWrapper.client).publish({
       _id: conference._id,
@@ -125,7 +103,6 @@ exports.createConference = async (req: Request, res: Response) => {
       conferenceCity: conference.conferenceCity,
       conferenceStreet: conference.conferenceStreet,
       conferenceProvince: conference.conferenceProvince,
-
       discipline: conference.discipline,
       keywords: conference.keywords,
 
@@ -135,7 +112,7 @@ exports.createConference = async (req: Request, res: Response) => {
       committee: conference.committee,
       speakers: conference.speakers,
       participants: conference.participants,
-      applicants: conference.applicants,
+      applications: conference.applications,
       sessions: conference.sessions,
       speeches: conference.speeches,
 
@@ -149,7 +126,7 @@ exports.createConference = async (req: Request, res: Response) => {
       version: conference.version,
       createdAt: conference.createdAt,
     });
-    // console.log(conference);
+
     res.status(200).send({ conferences: conference || null });
   } catch (err) {
     res.status(404).send(`ERROR!! ${err}`);

@@ -61,6 +61,9 @@ const Dashboard = ({ conferences, currentUser }) => {
         <button>
           <Link href="/conferences/new">Create Conference</Link>
         </button>
+        <button>
+          <Link href="/conferences/my-applications">My applications</Link>
+        </button>
       </div>
     </div>
   );

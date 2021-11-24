@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { UserDoc } from "./user";
 import { ContactDoc } from "./contact";
 import { ConferenceDoc } from "./conference";
+import { ApplicationDoc } from "./application";
 
 import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 
@@ -12,7 +13,7 @@ interface ProfileAttrs {
   birthdate: any;
   aboutMe: string;
   profilePhoto: string;
-  createdAt: Date;
+
   school: string;
   profession: string;
   academicTitle: string;
@@ -22,6 +23,7 @@ interface ProfileAttrs {
     time: Date;
     doi: string;
   }[];
+  applications: ApplicationDoc[];
   conferences: ConferenceDoc[];
   contacts: [ContactDoc];
   organizations: string[];
@@ -30,6 +32,8 @@ interface ProfileAttrs {
   posts: [string];
   comments: [string];
   phoneNumber: string;
+
+  createdAt: Date;
 }
 
 interface ProfileModel extends mongoose.Model<ProfileDoc> {
@@ -38,20 +42,21 @@ interface ProfileModel extends mongoose.Model<ProfileDoc> {
 
 interface ProfileDoc extends mongoose.Document {
   user: UserDoc;
-  age: string;
+  age: number;
   birthdate: string;
   aboutMe: string;
   profilePhoto: string;
-  createdAt: string;
+
   school: string;
   profession: string;
   academicTitle: string;
   publications: {
     title: string;
     description: string;
-    time: string;
+    time: Date;
     doi: string;
   }[];
+  applications: ApplicationDoc[];
   conferences: ConferenceDoc[];
   contacts: [ContactDoc];
   organizations: string[];
@@ -61,6 +66,8 @@ interface ProfileDoc extends mongoose.Document {
   comments: [string];
 
   phoneNumber: string;
+
+  createdAt: Date;
   version: number;
 }
 
@@ -103,6 +110,11 @@ const profileSchema = new mongoose.Schema(
       ref: "Contact",
       required: false,
     },
+    applications: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Application",
+      required: false,
+    },
     conferences: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: "Conference",
@@ -142,7 +154,7 @@ const profileSchema = new mongoose.Schema(
       required: false,
     },
     createdAt: {
-      type: String,
+      type: Date,
       default: Date.now(),
       select: false,
       required: true,
@@ -172,6 +184,7 @@ profileSchema.statics.build = (attrs: ProfileAttrs) => {
     profession: attrs.profession,
     academicTitle: attrs.academicTitle,
     publications: attrs.publications,
+    applications: attrs.applications,
     conferences: attrs.conferences,
     organizations: attrs.organizations,
     contacts: attrs.contacts,
@@ -191,41 +204,3 @@ const Profile = mongoose.model<ProfileDoc, ProfileModel>(
 );
 
 export { Profile };
-
-// _id: attrs._id,
-//     user: attrs.user,
-//     age: attrs.age,
-//     birthdate: attrs.birthdate,
-//     aboutMe: attrs.aboutMe,
-//     profilePhoto: attrs.profilePhoto,
-//     createdAt: new Date(Date.now()).toString(),
-//     school: attrs.school,
-//     profession: attrs.profession,
-//     experiences: attrs.experiences,
-//     currentJob: attrs.currentJob,
-// phoneNumber: attrs.phoneNumber,
-
-// user: UserDoc;
-// age: string;
-// birthdate: string;
-// aboutMe: string;
-// profilePhoto: string;
-// createdAt: string;
-// school: string;
-// profession: string;
-// academicTitle: string;
-// publications: {
-//   title: string;
-//   description: string;
-//   time: string;
-//   doi: string;
-// }[];
-// conferences: [];
-// contacts: [ContactDoc];
-// events: [string];
-// notifications: [];
-// posts: [string];
-// comments: [string];
-
-// phoneNumber: string;
-// version: number;

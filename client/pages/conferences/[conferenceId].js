@@ -22,9 +22,9 @@ const Conference = ({
         <div className="conference__info">
           <div className="conference__info-header">
             <h1>{conference.name}</h1>
-            {isApplicant === false && role === "none" ? (
-              <Link href={`${conference._id}/join`}>
-                <button>Join</button>
+            {role === "none" ? (
+              <Link href={`${conference._id}/applications/applay`}>
+                <button>Applay</button>
               </Link>
             ) : (
               ""

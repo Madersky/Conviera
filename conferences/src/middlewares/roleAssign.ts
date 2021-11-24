@@ -28,12 +28,6 @@ export const roleAssign = async (
 
   res.locals.role = user?.role || "none";
 
-  const applicant = conference?.applicants.find(
-    (applicant) =>
-      applicant.user._id.toString() === req.currentUser?._id.toString()
-  );
-  res.locals.isApplicant = !!applicant;
-
-  console.log("middleware", res.locals);
+  //   console.log("middleware", res.locals);
   next();
 };
