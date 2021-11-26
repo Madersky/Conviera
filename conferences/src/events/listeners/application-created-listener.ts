@@ -27,7 +27,6 @@ export class ApplicationCreatedListener extends Listener<ApplicationCreatedEvent
       });
       await conference.save();
     }
-
     msg.ack();
   }
 }

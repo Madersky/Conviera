@@ -9,7 +9,6 @@ import { signinRouter } from "./routes/signin";
 import { signoutRouter } from "./routes/signout";
 import { signupRouter } from "./routes/signup";
 
-import { allUserRouter } from "./routes/test/all-users";
 import { updateUserRouter } from "./routes/updateUser";
 
 const app = express();
@@ -26,7 +25,6 @@ app.use(currentUserRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
 app.use(signupRouter);
-app.use(allUserRouter);
 
 app.all("*", async (req, res) => {
   throw new NotFoundError();

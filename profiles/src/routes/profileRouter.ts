@@ -35,8 +35,8 @@ router
     validator.validateProfile,
     validateRequest,
     profileController.patchProfile
-  )
-  .put(requireAuth, profileController.deleteValueFromArrayProfile);
+  );
+// .put(requireAuth, profileController.deleteValueFromArrayProfile);
 
 router
   .route("/id/:_id/photo")
@@ -47,8 +47,8 @@ router
   .post(requireAuth, validateRequest, profileController.createPublication);
 // .delete(requireAuth, validateRequest, profileController.deletePublication);
 
-router
-  .route("/email/:email")
-  .get(requireAuth, profileController.getProfileByEmail);
+// router
+//   .route("/email/:email")
+//   .get(requireAuth, profileController.getProfileByEmail);
 
 module.exports = router;

@@ -40,13 +40,13 @@ router.post(
 
     // PUBLISHING EVENT user:created
 
-    await new UserCreatedPublisher(natsWrapper.client).publish({
-      _id: user._id,
-      email: user.email,
-      firstname: user.firstname,
-      lastname: user.lastname,
-      version: user.version,
-    });
+    // await new UserCreatedPublisher(natsWrapper.client).publish({
+    //   _id: user._id,
+    //   email: user.email,
+    //   firstname: user.firstname,
+    //   lastname: user.lastname,
+    //   version: user.version,
+    // });
 
     // Generate JWT
     const userJwt = jwt.sign(

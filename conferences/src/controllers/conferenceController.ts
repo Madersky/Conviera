@@ -38,9 +38,9 @@ exports.getConference = async (req: Request, res: Response) => {
   try {
     // const user = await User.findById(req.currentUser?._id)
     // console.log("user fomr getConference CONTROLLER", user)
-    // const conference = await Conference.findById(req.params._id).populate(
-    //   "creator"
-    // );
+    const conference = await Conference.findById(req.params._id)
+      .populate("applications")
+      .populate("creator");
 
     // if (!req.currentUser) {
     //   throw new Error();
@@ -58,7 +58,7 @@ exports.getConference = async (req: Request, res: Response) => {
     //   throw new Error("bad data in request");
     // } else {
     res.status(200).send({
-      conference: res.locals.conference,
+      conference: conference,
       role: res.locals.role,
     });
     // }

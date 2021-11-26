@@ -27,28 +27,21 @@ exports.getAllProfiles = async (
 
 exports.getProfileByUserId = async (req: Request, res: Response) => {
   try {
-    const profile = await Profile.findById(req.params._id).populate("user");
+    const profile = await Profile.findById(req.params._id)
+      .populate("user")
+      .populate("conferences");
     res.status(200).send({ profile: profile });
   } catch (err) {
     res.status(404).send(`ERRROR! ${err}`);
   }
 };
 
-exports.getProfileByEmail = async (req: Request, res: Response) => {
-  try {
-    const profile = await Profile.where("email").equals(req.params.email);
-    res.status(200).send({ profile: profile || null });
-  } catch (err) {
-    res.status(404).send(`ERROR! ${err}`);
-  }
-};
-
-// exports.getProfileApplications = async (req: Request, res: Response) => {
+// exports.getProfileByEmail = async (req: Request, res: Response) => {
 //   try {
-//     const profile = Profile.findById(req.params._id);
-//     const applications =
+//     const profile = await Profile.where("email").equals(req.params.email);
+//     res.status(200).send({ profile: profile || null });
 //   } catch (err) {
-//     throw new Error(`ERROR !! ${err}`);
+//     res.status(404).send(`ERROR! ${err}`);
 //   }
 // };
 
@@ -109,25 +102,25 @@ exports.patchProfile = async (req: Request, res: Response) => {
   }
 };
 
-exports.deleteValueFromArrayProfile = async (req: Request, res: Response) => {
-  try {
-    const tab = req.body.tab;
-    const value = req.body.value;
+// exports.deleteValueFromArrayProfile = async (req: Request, res: Response) => {
+//   try {
+//     const tab = req.body.tab;
+//     const value = req.body.value;
 
-    const profile = await Profile.findByIdAndUpdate(req.params._id, {
-      // [tab] tak się wpisuje zmienną jako pole w modelu
-      $pull: { [tab]: value },
-    });
-    if (!profile) {
-      throw new Error("Profile not found");
-    }
+//     const profile = await Profile.findByIdAndUpdate(req.params._id, {
+//       // [tab] tak się wpisuje zmienną jako pole w modelu
+//       $pull: { [tab]: value },
+//     });
+//     if (!profile) {
+//       throw new Error("Profile not found");
+//     }
 
-    console.log(
-      `Usunieto takie value: ${value}, z takiej tablicy: ${req.body.tab}`
-    );
-    await profile.save();
-    res.status(200).send({ profile: profile || null });
-  } catch (err) {
-    res.status(404).send(`ERROR! deleteProfileProperty ${err}`);
-  }
-};
+//     console.log(
+//       `Usunieto takie value: ${value}, z takiej tablicy: ${req.body.tab}`
+//     );
+//     await profile.save();
+//     res.status(200).send({ profile: profile || null });
+//   } catch (err) {
+//     res.status(404).send(`ERROR! deleteProfileProperty ${err}`);
+//   }
+// };
