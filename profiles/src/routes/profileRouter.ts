@@ -32,8 +32,7 @@ router
   .get(requireAuth, profileController.getProfileByUserId)
   .patch(
     requireAuth,
-    validator.validateProfile,
-    validateRequest,
+    validator.validateProfilePatch,
     profileController.patchProfile
   );
 // .put(requireAuth, profileController.deleteValueFromArrayProfile);

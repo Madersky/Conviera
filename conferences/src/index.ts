@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import { app } from "./app";
+import populate from "./services/populate";
 import { ApplicationCreatedListener } from "./events/listeners/application-created-listener";
+import { ApplicationUpdatedListener } from "./events/listeners/application-updated-listener";
 import { UserCreatedListener } from "./events/listeners/user-created-listener";
 // import { UserUpdatedListener } from "./events/listeners/user-updated-listener";
 import { natsWrapper } from "./nats-wrapper";
@@ -37,18 +39,20 @@ const start = async () => {
 
     new UserCreatedListener(natsWrapper.client).listen();
     new ApplicationCreatedListener(natsWrapper.client).listen();
+    new ApplicationUpdatedListener(natsWrapper.client).listen();
     // new UserUpdatedListener(natsWrapper.client).listen();
 
     await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
+      useFindAndModify: false,
     });
     console.log("Connected to MongoDb");
+    populate();
   } catch (err) {
     console.error(err);
   }
-
   app.listen(3000, () => {
     console.log("Listening on port 3000!!!!!!!!");
   });

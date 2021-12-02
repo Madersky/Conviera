@@ -15,22 +15,16 @@ export class ApplicationCreatedListener extends Listener<ApplicationCreatedEvent
 
     await application.save();
 
-    const profile = await Profile.findByIdAndUpdate(
-      application.user._id,
-      { $addToSet: { applications: application } },
-      { new: true }
-    );
+    const profile = await Profile.findById(data.user);
 
-    if (profile) {
-      await new ProfileUpdatePublisher(natsWrapper.client).publish({
-        _id: profile._id,
-        ...profile,
-      });
-    } else {
-      throw new Error(`ERROR !!! profile do not exist`);
+    if (!profile) {
+      throw new Error(`ERROR !!! profile not found`);
     }
+    profile.applications.push(application);
 
     await profile.save();
+
+    new ProfileUpdatePublisher(natsWrapper.client).publish(profile);
 
     msg.ack();
   }

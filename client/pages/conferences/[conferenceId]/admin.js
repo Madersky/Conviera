@@ -1,10 +1,12 @@
 import UsersList from "../../../components/profiles/userList/UserList";
 
+import ApplicationList from "../../../components/applications/applicationList";
+
 const ConferenceAdminPanel = ({
   conference,
   role,
   isApplicant,
-  profiles,
+
   currentUser,
 }) => {
   // if (currentUser._id != conference.creator._id) {
@@ -18,19 +20,16 @@ const ConferenceAdminPanel = ({
     <div className="conference">
       <div className="conference__dashboard--left">
         <div className="conference__info">
-          <div className="conference__info-header">
-            <h1>{conference.name}</h1>
-          </div>
-          <h1>{role}</h1>
           <div>
-            {conference.creator.firstname} {conference.creator.lastname}
+            <ApplicationList
+              applications={conference.applications}
+              conference={conference}
+            />
           </div>
         </div>
       </div>
       <div className="conference__dashboard--right">
-        <div>
-          <UsersList users={profiles} headerText="Applicants" />
-        </div>
+        <div>{/* <UsersList headerText="Applicants" /> */}</div>
       </div>
     </div>
   );
@@ -42,21 +41,19 @@ ConferenceAdminPanel.getInitialProps = async (context, client, currentUser) => {
   );
   const conference = conferenceRes.data.conference;
 
-  console.log(conference);
-  const profilesRes = await Promise.all(
-    conference.applications.map((application) => {
-      console.log(application);
-      return client.get(`/api/profiles/id/${application.user}`);
-    })
-  );
+  // const profilesRes = await Promise.all(
+  //   conference.applications.map((application) => {
+  //     return client.get(`/api/profiles/id/${application.user._id}`);
+  //   })
+  // );
 
-  let profiles = profilesRes.map((profile) => {
-    return profile.data.profile;
-  });
+  // let profiles = profilesRes.map((profile) => {
+  //   return profile.data.profile;
+  // });
 
   return {
     ...conferenceRes.data,
-    profiles,
+    // profiles,
     currentUser,
   };
 };

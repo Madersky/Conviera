@@ -15,23 +15,29 @@ const UseRequest = ({ url, method, body, onSuccess }) => {
 
       return response.data;
     } catch (err) {
-      const fields = err.response.data.errors.map((err) => err.param);
-      console.log(err)
-      const errorMessage = err.response.data.errors.map((err) => err.msg);
-      const objectFields = [];
-      const objectMessage = [];
+      // const siema = err;
+      // console.log("to jest siema", siema);
 
-      for (let i = 0; i < errorMessage.length; i++) {
-        objectMessage[fields[i]] = errorMessage[i];
+      if (err.response.data.errors) {
+        const fields = err.response.data.errors.map((err) => err.param);
+        const errorMessage = err.response.data.errors.map((err) => err.msg);
+        const objectFields = [];
+        const objectMessage = [];
+
+        for (let i = 0; i < errorMessage.length; i++) {
+          objectMessage[fields[i]] = errorMessage[i];
+        }
+
+        fields.forEach((element) => {
+          objectFields[element] = element;
+        });
+        setErrors({
+          fields: objectFields,
+          message: objectMessage,
+        });
+      } else {
+        console.log(err.response.data);
       }
-
-      fields.forEach((element) => {
-        objectFields[element] = element;
-      });
-      setErrors({
-        fields: objectFields,
-        message: objectMessage,
-      });
     }
   };
 

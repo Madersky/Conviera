@@ -9,13 +9,13 @@ const FileUpload = ({ currentUser, conference }) => {
   console.log(conferenceId);
 
   const [role, setRole] = useState("listener");
-  const [file, setFile] = useState(undefined);
+  const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState("Choose file");
   const [fileUrl, setFileUrl] = useState(undefined);
   const isInitialMount = useRef(true);
 
   const [createApplicationRequest, createApplicationErrors] = UseRequest({
-    url: `/api/applications/new`,
+    url: `/api/applications`,
     method: "post",
     body: {
       conference: conference,
@@ -34,6 +34,7 @@ const FileUpload = ({ currentUser, conference }) => {
       isInitialMount.current = false;
     } else {
       if (currentUser && role === "listener") {
+        setFile(undefined);
         createApplicationRequest();
         return;
       } else if (currentUser && role === "speaker") {
@@ -78,7 +79,11 @@ const FileUpload = ({ currentUser, conference }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    uploadFile();
+    if (role !== "listener") {
+      uploadFile();
+    } else {
+      createApplicationRequest();
+    }
   };
 
   const onChange = (e) => {
@@ -97,22 +102,27 @@ const FileUpload = ({ currentUser, conference }) => {
               <option>listener</option>
               <option>speaker</option>
             </select>
-            <div className="">
-              <label>
-                {fileName}
-                <input
-                  className=""
-                  type="file"
-                  name="photo"
-                  accept=".doc,.docx,application/msword, application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                  onChange={onChange}
-                />
-              </label>
-            </div>
+            {role === "speaker" ? (
+              <div className="">
+                <label>
+                  {fileName}
+                  <input
+                    className=""
+                    type="file"
+                    name="photo"
+                    accept=".doc,.docx,application/msword, application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    onChange={onChange}
+                  />
+                </label>
+              </div>
+            ) : (
+              ""
+            )}
+
             <button
               type="submit"
               style={
-                fileName !== "Choose file"
+                role === "listener" || fileName !== "Choose file"
                   ? { display: "flex" }
                   : { display: "none" }
               }

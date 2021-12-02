@@ -14,6 +14,7 @@ interface conferenceAttrs {
   conferenceEndDate: Date;
 
   mode: string;
+  conferenceCountry: string;
   conferenceVenue: string;
   conferenceCity: string;
   conferenceStreet: string;
@@ -60,6 +61,7 @@ export interface ConferenceDoc extends mongoose.Document {
   conferenceEndDate: Date;
 
   mode: string;
+  conferenceCountry: string;
   conferenceVenue: string;
   conferenceCity: string;
   conferenceStreet: string;
@@ -122,6 +124,10 @@ const conferenceSchema = new mongoose.Schema(
     mode: {
       type: String,
       required: true,
+    },
+    conferenceCountry: {
+      type: String,
+      required: false,
     },
     conferenceVenue: {
       type: String,
@@ -221,6 +227,7 @@ conferenceSchema.statics.build = (attrs: conferenceAttrs) => {
     conferenceEndDate: attrs.conferenceEndDate,
 
     mode: attrs.mode,
+    conferenceCountry: attrs.conferenceCountry,
     conferenceVenue: attrs.conferenceVenue,
     conferenceCity: attrs.conferenceCity,
     conferenceStreet: attrs.conferenceStreet,

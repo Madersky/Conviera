@@ -8,6 +8,7 @@ const Conference = ({
   profiles,
   currentUser,
 }) => {
+  console.log("role:", role, "&", "applicant:", isApplicant);
   return (
     <div className="conference">
       <div className="conference__dashboard--left">
@@ -22,7 +23,7 @@ const Conference = ({
         <div className="conference__info">
           <div className="conference__info-header">
             <h1>{conference.name}</h1>
-            {role === "none" ? (
+            {role === "none" && isApplicant === false ? (
               <Link href={`${conference._id}/applications/applay`}>
                 <button>Applay</button>
               </Link>
@@ -30,9 +31,9 @@ const Conference = ({
               ""
             )}
           </div>
-          <h1>{role}</h1>
-          <div>
-            {conference.creator.firstname} {conference.creator.lastname}
+
+          <div className="conference__info-description">
+            {conference.description}
           </div>
         </div>
         {role != "none" ? <div>Content for participants</div> : ""}
@@ -66,7 +67,7 @@ Conference.getInitialProps = async (context, client, currentUser) => {
 
   const profilesRes = await Promise.all(
     conference.participants.map((participant) => {
-      return client.get(`/api/profiles/id/${participant.user._id}`);
+      return client.get(`/api/profiles/id/${participant.user}`);
     })
   );
 

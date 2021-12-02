@@ -36,38 +36,22 @@ exports.getAllConferencesByDiscipline = async (req: Request, res: Response) => {
 
 exports.getConference = async (req: Request, res: Response) => {
   try {
-    // const user = await User.findById(req.currentUser?._id)
-    // console.log("user fomr getConference CONTROLLER", user)
     const conference = await Conference.findById(req.params._id)
-      .populate("applications")
+      // .populate("applications")
+      .populate({
+        path: "applications",
+        populate: {
+          path: "user",
+          model: "User",
+        },
+      })
       .populate("creator");
 
-    // if (!req.currentUser) {
-    //   throw new Error();
-    // }
-
-    // const user = conference?.participants.find(
-    //   (participant) =>
-    //     participant.user._id.toString() === req.currentUser?._id.toString()
-    // );
-    // const applicant = conference?.applicants.find(
-    //   (applicant) =>
-    //     applicant.user._id.toString() === req.currentUser?._id.toString()
-    // );
-    // if (!res.locals.conference) {
-    //   throw new Error("bad data in request");
-    // } else {
     res.status(200).send({
       conference: conference,
       role: res.locals.role,
+      isApplicant: res.locals.isApplicant,
     });
-    // }
-
-    // res.status(200).send({
-    //   conference: res.locals.conference,
-    //   role: user?.role || "none",
-    //   isApplicant: !!applicant,
-    // });
   } catch (err) {
     res.status(404).send(`ERROR!! ${err}`);
   }
@@ -88,44 +72,46 @@ exports.createConference = async (req: Request, res: Response) => {
 
     await conference.save();
 
-    await new ConferenceCreatedPublisher(natsWrapper.client).publish({
-      _id: conference._id,
-      name: conference.name,
-      description: conference.description,
-      registrationStartDate: conference.registrationStartDate,
-      registrationEndDate: conference.registrationEndDate,
-      conferenceStartDate: conference.conferenceStartDate,
-      conferenceEndDate: conference.conferenceEndDate,
+    new ConferenceCreatedPublisher(natsWrapper.client).publish(conference);
 
-      mode: conference.mode,
-      conferenceCountry: conference.conferenceCountry,
-      conferenceVenue: conference.conferenceVenue,
-      conferenceCity: conference.conferenceCity,
-      conferenceStreet: conference.conferenceStreet,
-      conferenceProvince: conference.conferenceProvince,
-      discipline: conference.discipline,
-      keywords: conference.keywords,
+    // await new ConferenceCreatedPublisher(natsWrapper.client).publish({
+    //   _id: conference._id,
+    //   name: conference.name,
+    //   description: conference.description,
+    //   registrationStartDate: conference.registrationStartDate,
+    //   registrationEndDate: conference.registrationEndDate,
+    //   conferenceStartDate: conference.conferenceStartDate,
+    //   conferenceEndDate: conference.conferenceEndDate,
 
-      organizers: conference.organizers,
-      creator: conference.creator,
-      moderators: conference.moderators,
-      committee: conference.committee,
-      speakers: conference.speakers,
-      participants: conference.participants,
-      applications: conference.applications,
-      sessions: conference.sessions,
-      speeches: conference.speeches,
+    //   mode: conference.mode,
+    //   conferenceCountry: conference.conferenceCountry,
+    //   conferenceVenue: conference.conferenceVenue,
+    //   conferenceCity: conference.conferenceCity,
+    //   conferenceStreet: conference.conferenceStreet,
+    //   conferenceProvince: conference.conferenceProvince,
+    //   discipline: conference.discipline,
+    //   keywords: conference.keywords,
 
-      cost: conference.cost,
+    //   organizers: conference.organizers,
+    //   creator: conference.creator,
+    //   moderators: conference.moderators,
+    //   committee: conference.committee,
+    //   speakers: conference.speakers,
+    //   participants: conference.participants,
+    //   applications: conference.applications,
+    //   sessions: conference.sessions,
+    //   speeches: conference.speeches,
 
-      contactEmail: conference.contactEmail,
-      contactSite: conference.contactSite,
-      phoneNumber: conference.phoneNumber,
+    //   cost: conference.cost,
 
-      posts: conference.posts,
-      version: conference.version,
-      createdAt: conference.createdAt,
-    });
+    //   contactEmail: conference.contactEmail,
+    //   contactSite: conference.contactSite,
+    //   phoneNumber: conference.phoneNumber,
+
+    //   posts: conference.posts,
+    //   version: conference.version,
+    //   createdAt: conference.createdAt,
+    // });
 
     res.status(200).send({ conferences: conference || null });
   } catch (err) {

@@ -11,10 +11,6 @@ export class ConferenceCreatedlistener extends Listener<ConferenceCreatedEvent> 
     const conference = await Conference.build(conferenceData);
     await conference.save();
 
-    console.log(
-      "WYKONUJE SIE LISTENER Z CONFERENCE CREATED W SERWISIE APPLICATIONS"
-    );
-
     msg.ack();
   }
 }

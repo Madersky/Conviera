@@ -14,19 +14,24 @@ export class ApplicationCreatedListener extends Listener<ApplicationCreatedEvent
 
     await application.save();
 
-    const conference = await Conference.findByIdAndUpdate(
-      application.conference._id,
-      { $addToSet: { applications: application } },
-      { new: true }
-    );
+    // const conference = await Conference.findByIdAndUpdate(
+    //   application.conference._id,
+    //   { $addToSet: { applications: application } },
+    //   { new: true }
+    // );
 
-    if (conference) {
-      await new ConferenceUpdatedPublisher(natsWrapper.client).publish({
-        _id: conference._id,
-        ...conference,
-      });
-      await conference.save();
+    const conference = await Conference.findById(data.conference);
+
+    if (!conference) {
+      throw new Error("ERROR !! Conference not found");
     }
+
+    conference.applications.push(application);
+
+    await conference.save();
+
+    new ConferenceUpdatedPublisher(natsWrapper.client).publish(conference);
+
     msg.ack();
   }
 }

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: speeches-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: speeches-mongo
+  template:
+    metadata:
+      labels:
+        app: speeches-mongo
+    spec:
+      containers:
+        - name: speeches-mongo
+          image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: speeches-mongo-srv
+spec:
+  selector:
+    app: speeches-mongo
+  ports:
+    - name: speeches-db
+      protocol: TCP
+      port: 27017
+      targetPort: 27017

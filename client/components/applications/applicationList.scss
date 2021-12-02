@@ -1,0 +1,122 @@
+.applications-list {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+
+  &__labels {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid indigo;
+
+    p {
+      width: 100%;
+      display: flex;
+      text-align: center;
+      justify-content: center;
+      justify-self: center;
+    }
+  }
+
+  &__instance {
+    display: flex;
+    width: 100%;
+
+    &:not(:last-of-type) {
+      border-bottom: 1px solid indigo;
+    }
+
+    &-info {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      margin: 10px 0 10px 0;
+      h4 {
+        margin: 0;
+      }
+
+      &-name {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        justify-self: center;
+        h4 {
+          margin: 0;
+        }
+      }
+
+      &-role {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        justify-self: center;
+        h4 {
+          margin: 0;
+        }
+      }
+
+      &-attachment {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        justify-self: center;
+        h4 {
+          font-size: 32px;
+          margin: 0;
+        }
+      }
+      &-status {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        justify-self: center;
+        h4 {
+          margin: 0;
+        }
+      }
+      &-action {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        justify-self: center;
+        h4 {
+          margin: 0;
+        }
+
+        button {
+          display: flex;
+          font-size: 32px;
+          width: fit-content;
+
+          color: indigo;
+          background-color: white;
+          border: 1px solid indigo;
+
+          cursor: pointer;
+
+          &:first-child {
+            margin-right: 15px;
+          }
+        }
+      }
+    }
+  }
+}

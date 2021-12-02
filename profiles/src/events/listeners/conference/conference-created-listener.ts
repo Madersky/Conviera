@@ -26,9 +26,7 @@ export class ConferenceCreatedlistener extends Listener<ConferenceCreatedEvent> 
     if (!profile) {
       throw new Error("Profile not found!");
     }
-    console.log(
-      "WYKONUJE SIE LISTENER Z CONFERENCE CREATED W SERWISIE PROFILE"
-    );
+
     await profile.save();
 
     msg.ack();

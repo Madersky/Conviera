@@ -7,21 +7,18 @@ export class ConferenceUpdatedlistener extends Listener<ConferenceUpdatedEvent> 
   readonly subject = Subjects.ConferenceUpdated;
   queueGroupName = "profiles-service";
   async onMessage(data: ConferenceUpdatedEvent["data"], msg: Message) {
-    const conferenceData = data;
-    // let conference = await Conference.findById(conferenceData._id);
+    const conference = await Conference.findOne({
+      _id: data._id,
+      version: data.version - 1,
+    });
 
-    const conference = await Conference.findByIdAndUpdate(
-      conferenceData._id,
-      data
-    );
     if (!conference) {
-      throw new Error("Profile not found");
+      throw new Error("Conference not found");
     }
-    await conference.save();
 
-    console.log(
-      "WYKONUJE SIE LISTENER Z CONFERENCE CREATED W SERWISIE APPLICATIONS"
-    );
+    conference.set({ ...data, version: data.version - 1 });
+
+    await conference.save();
 
     msg.ack();
   }

@@ -22,6 +22,10 @@ spec:
             backend:
               serviceName: applications-srv
               servicePort: 3000
+          - path: /api/speeches/?(.*)
+            backend:
+              serviceName: speeches-srv
+              servicePort: 3000
           # - path: /api/posts/?(.*)
           #   backend:
           #     serviceName: posts-srv

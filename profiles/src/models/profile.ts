@@ -41,6 +41,7 @@ interface ProfileModel extends mongoose.Model<ProfileDoc> {
 }
 
 interface ProfileDoc extends mongoose.Document {
+  _id: string;
   user: UserDoc;
   age: number;
   birthdate: string;

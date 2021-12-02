@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { app } from "./app";
 import { ApplicationCreatedListener } from "./events/listeners/applications/application-created-listener";
+import { ApplicationUpdatedListener } from "./events/listeners/applications/application-updated-listener";
 import { ConferenceCreatedlistener } from "./events/listeners/conference/conference-created-listener";
 import { ConferenceUpdatedlistener } from "./events/listeners/conference/conference-updated-event";
 import { UserCreatedListener } from "./events/listeners/user/user-created-listener";
@@ -44,11 +45,12 @@ const start = async () => {
     new ConferenceUpdatedlistener(natsWrapper.client).listen();
 
     new ApplicationCreatedListener(natsWrapper.client).listen();
-
+    new ApplicationUpdatedListener(natsWrapper.client).listen();
     await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
+      useFindAndModify: false,
     });
     console.log("Connected to MongoDb");
   } catch (err) {
